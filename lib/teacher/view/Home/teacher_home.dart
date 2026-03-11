@@ -41,17 +41,12 @@ class HomeTeacher extends StatelessWidget {
     print(_controller.currentIndex.value);
     return SingleChildScrollView(
       child: Column(children: [
-        const SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
         Container(
           height: 255,
           width: 300,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                12.0,
-              ),
-              color: Colors.white),
+              borderRadius: BorderRadius.circular(12.0), color: Colors.white),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: TableCalendar(
@@ -62,85 +57,47 @@ class HomeTeacher extends StatelessWidget {
               shouldFillViewport: true,
               daysOfWeekHeight: 15,
               calendarStyle: const CalendarStyle(
-                defaultTextStyle: TextStyle(
-                  fontSize: 10,
-                ),
-                weekendTextStyle: TextStyle(
-                  fontSize: 10,
-                ),
-                todayTextStyle: TextStyle(
-                  fontSize: 10,
-                ),
-                holidayTextStyle: TextStyle(
-                  fontSize: 10,
-                ),
-                outsideTextStyle: TextStyle(
-                  fontSize: 10,
-                ),
-                disabledTextStyle: TextStyle(
-                  fontSize: 10,
-                ),
-                rangeEndTextStyle: TextStyle(
-                  fontSize: 10,
-                ),
-                selectedTextStyle: TextStyle(
-                  fontSize: 10,
-                ),
-                rangeStartTextStyle: TextStyle(
-                  fontSize: 10,
-                ),
-                withinRangeTextStyle: TextStyle(
-                  fontSize: 10,
-                ),
+                defaultTextStyle: TextStyle(fontSize: 10),
+                weekendTextStyle: TextStyle(fontSize: 10),
+                todayTextStyle: TextStyle(fontSize: 10),
+                holidayTextStyle: TextStyle(fontSize: 10),
+                outsideTextStyle: TextStyle(fontSize: 10),
+                disabledTextStyle: TextStyle(fontSize: 10),
+                rangeEndTextStyle: TextStyle(fontSize: 10),
+                selectedTextStyle: TextStyle(fontSize: 10),
+                rangeStartTextStyle: TextStyle(fontSize: 10),
+                withinRangeTextStyle: TextStyle(fontSize: 10),
               ),
             ),
           ),
         ),
-        const SizedBox(
-          height: 15,
-        ),
-
-       
+        const SizedBox(height: 15),
         FutureBuilder(
-            future: _controller.getPrograms(),
-            builder: ((context, AsyncSnapshot snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: Text('Loading...'));
-              }
-
-              return _controller.myprograms.isEmpty
-                  ? SizedBox(
-                      height: 25,
-                      child: Center(
-                        child: Text(
-                          'NO Programs',
-                        ),
-                      ),
-                    )
-                  : ListView.separated(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 20,
-                      ),
-                      itemCount: _controller.myprograms.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return programCard(
-                          gProgram: _controller.myprograms[index],
-                        );
-                      },
-                    );
-            }),
-          ),
-
-
-        
-        const DividerParent(
-          text: "Classes",
+          future: _controller.getPrograms(),
+          builder: ((context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: Text('Loading...'));
+            }
+            return _controller.myprograms.isEmpty
+                ? SizedBox(
+                    height: 25,
+                    child: Center(child: Text('NO Programs')),
+                  )
+                : ListView.separated(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) =>
+                        SizedBox(height: 20),
+                    itemCount: _controller.myprograms.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return programCard(
+                          gProgram: _controller.myprograms[index]);
+                    },
+                  );
+          }),
         ),
-        const SizedBox(
-          height: 10,
-        ),
+        const DividerParent(text: "Classes"),
+        const SizedBox(height: 10),
         SizedBox(
           height: 210.h,
           width: 540.w,
@@ -153,12 +110,7 @@ class HomeTeacher extends StatelessWidget {
               if (true) {
                 if (snapshot.hasError) {
                   return ErrorMessage();
-                } /*else if (!snapshot.hasData) {
-                  return Center(
-                    child: Text('There no classes'),
-                  );
-                } */
-                else {
+                } else {
                   return ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: _controller.classesList.value.length,
@@ -203,8 +155,6 @@ class TeacherClassesCard extends StatelessWidget {
       padding: EdgeInsets.only(left: 24.w, bottom: 20.h, top: 10.h),
       child: GestureDetector(
         onTap: () {
-          print('this is class id ');
-          print(classId.toString());
           var data = {
             'grade': grade.toString(),
             'classid': classId.toString(),
@@ -215,9 +165,7 @@ class TeacherClassesCard extends StatelessWidget {
           height: 178.h,
           width: 178.w,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(
-                12.0,
-              ),
+              borderRadius: BorderRadius.circular(12.0),
               gradient: gradientColor),
           child: Padding(
             padding: const EdgeInsets.only(top: 15, left: 15),
@@ -233,9 +181,7 @@ class TeacherClassesCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 3,
-                ),
+                const SizedBox(height: 3),
                 Text(
                   "$numberOfStudents",
                   style: sfBoldStyle(fontSize: 10, color: Colors.white),
@@ -249,54 +195,50 @@ class TeacherClassesCard extends StatelessWidget {
   }
 }
 
-
 class programCard extends StatefulWidget {
-  programCard({
-    required this.gProgram,
-  });
-
+  programCard({required this.gProgram});
   Program gProgram;
 
   @override
   State<programCard> createState() => _programCardState();
 }
 
- 
- void _launchUrl(Uri _url ) async {
+void _launchUrl(Uri _url) async {
   if (!await launchUrl(_url)) throw 'Could not launch $_url';
 }
 
 class _programCardState extends State<programCard> {
   DateFormat _dateFormat = DateFormat('y-MM-d');
-
   ReceivePort _port = ReceivePort();
 
-@override
-void initState() {
-  super.initState();
+  @override
+  void initState() {
+    super.initState();
+    IsolateNameServer.registerPortWithName(
+        _port.sendPort, 'downloader_send_port');
+    _port.listen((dynamic data) {
+      String id = data[0];
+      // FIX: Use int instead of DownloadTaskStatus
+      int status = data[1];
+      int progress = data[2];
+      setState(() {});
+    });
+    FlutterDownloader.registerCallback(downloadCallback);
+  }
 
-  IsolateNameServer.registerPortWithName(_port.sendPort, 'downloader_send_port');
-  _port.listen((dynamic data) {
-    String id = data[0];
-    DownloadTaskStatus status = data[1];
-    int progress = data[2];
-    setState((){ });
-  });
+  @override
+  void dispose() {
+    IsolateNameServer.removePortNameMapping('downloader_send_port');
+    super.dispose();
+  }
 
-  FlutterDownloader.registerCallback(downloadCallback);
-}
-
-@override
-void dispose() {
-  IsolateNameServer.removePortNameMapping('downloader_send_port');
-  super.dispose();
-}
-
-@pragma('vm:entry-point')
-static void downloadCallback(String id, DownloadTaskStatus status, int progress) {
-  final SendPort? send = IsolateNameServer.lookupPortByName('downloader_send_port');
-  send?.send([id, status, progress]);
-}
+  @pragma('vm:entry-point')
+  // FIX: Changed DownloadTaskStatus to int - new flutter_downloader API
+  static void downloadCallback(String id, int status, int progress) {
+    final SendPort? send =
+        IsolateNameServer.lookupPortByName('downloader_send_port');
+    send?.send([id, status, progress]);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -306,20 +248,15 @@ static void downloadCallback(String id, DownloadTaskStatus status, int progress)
         height: 60,
         width: 320,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            17.0,
-          ),
+          borderRadius: BorderRadius.circular(17.0),
           color: Colors.white,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             const Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Icon(
-                Icons.calendar_month,
-                color: primaryColor,
-              ),
+              padding: EdgeInsets.only(left: 20),
+              child: Icon(Icons.calendar_month, color: primaryColor),
             ),
             Text(
               '${widget.gProgram.type}',
@@ -335,26 +272,10 @@ static void downloadCallback(String id, DownloadTaskStatus status, int progress)
                 children: [
                   InkWell(
                     onTap: () async {
-                      print("downloadddddddd");
-
-                      /*showSnackBar('Starting download...', context);
-
-                      final baseStorage = await getExternalStorageDirectory();
-                      final id = await FlutterDownloader.enqueue(
-                        url: '${widget.gProgram.url}',
-                        savedDir: baseStorage!.path,
-                        fileName: 'file name',
-                      );*/
-
                       final Uri _url = Uri.parse(widget.gProgram.url!);
-
-                     _launchUrl(_url);
-
+                      _launchUrl(_url);
                     },
-                    child: Icon(
-                      Icons.arrow_circle_down,
-                      color: gray,
-                    ),
+                    child: Icon(Icons.arrow_circle_down, color: gray),
                   ),
                   Text(
                     "download",

@@ -22,12 +22,12 @@ class StudentsOfTask extends StatelessWidget {
   var chcontroller = Get.find<CheckedStudentTaskInfoController>();
   var taskId;
   var taskName;
+
   @override
   Widget build(BuildContext context) {
     var data = Get.parameters;
     uncontroller.task_id.value = data['id']!;
     chcontroller.task_id.value = data['id']!;
-    print(data['id']);
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
@@ -56,9 +56,7 @@ class StudentsOfTask extends StatelessWidget {
       ),
       backgroundColor: backgroundColor,
       body: Column(children: [
-        SizedBox(
-          height: 24.h,
-        ),
+        SizedBox(height: 24.h),
         GestureDetector(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -71,14 +69,8 @@ class StudentsOfTask extends StatelessWidget {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(
-                width: 7.w,
-              ),
-              const Icon(
-                Icons.arrow_drop_down,
-                size: 15,
-                color: primaryColor,
-              ),
+              SizedBox(width: 7.w),
+              const Icon(Icons.arrow_drop_down, size: 15, color: primaryColor),
             ],
           ),
         ),
@@ -123,15 +115,8 @@ class StudentsOfTask extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(
-            left: 24.w,
-            right: 24.w,
-            top: 10.h,
-            bottom: 10.h,
-          ),
-          child: Divider(
-            color: gray,
-            thickness: 2,
-          ),
+              left: 24.w, right: 24.w, top: 10.h, bottom: 10.h),
+          child: Divider(color: gray, thickness: 2),
         ),
         SizedBox(
           height: 340.h,
@@ -208,9 +193,6 @@ class CheckedStudentsOfTaskCard extends StatelessWidget {
     return GestureDetector(
       onTap: () async {
         var data = Get.parameters;
-        print(taskUrl);
-
-        print(name + ' soultion for ' + data['taskName']);
         await openFile(
             url: taskUrl, fileName: name + ' soultion for ' + data['taskName']);
       },
@@ -220,10 +202,7 @@ class CheckedStudentsOfTaskCard extends StatelessWidget {
             height: 100.h,
             width: double.infinity,
             child: Padding(
-              padding: EdgeInsets.only(
-                left: 24.w,
-                right: 24.w,
-              ),
+              padding: EdgeInsets.only(left: 24.w, right: 24.w),
               child: SizedBox(
                 height: 80.h,
                 width: double.infinity,
@@ -234,12 +213,9 @@ class CheckedStudentsOfTaskCard extends StatelessWidget {
                         onTap: () {
                           showDialog(
                             context: context,
-                            builder: (BuildContext) {
+                            builder: (BuildContext ctx) {
                               return AlertDialog(
                                 contentPadding: EdgeInsets.all(0),
-                                /* actions: [
-                              Text('hi'),
-                            ],*/
                                 content: SizedBox(
                                   height: 300.h,
                                   width: 248.w,
@@ -259,9 +235,7 @@ class CheckedStudentsOfTaskCard extends StatelessWidget {
                                           ),
                                         ),
                                         Container(
-                                          height: 39.h,
-                                          color: primaryColor,
-                                        ),
+                                            height: 39.h, color: primaryColor),
                                       ]),
                                 ),
                               );
@@ -273,9 +247,7 @@ class CheckedStudentsOfTaskCard extends StatelessWidget {
                           backgroundImage: NetworkImage(photoUrl.toString()),
                         ),
                       ),
-                      SizedBox(
-                        width: 15.w,
-                      ),
+                      SizedBox(width: 15.w),
                       SizedBox(
                         height: 70.h,
                         child: Column(
@@ -286,51 +258,39 @@ class CheckedStudentsOfTaskCard extends StatelessWidget {
                               width: 100.w,
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
-                                child: Text(
-                                  '${name}',
-                                  style: const TextStyle(
-                                    color: primaryColor,
-                                    fontFamily: RedHatDisplay.regular,
-                                    fontSize: 16,
-                                  ),
-                                ),
+                                child: Text('${name}',
+                                    style: const TextStyle(
+                                        color: primaryColor,
+                                        fontFamily: RedHatDisplay.regular,
+                                        fontSize: 16)),
                               ),
                             ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
+                            SizedBox(height: 10.h),
                             SizedBox(
                               width: 100.w,
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
-                                child: Text(
-                                  '$uploadeDate',
-                                  style: const TextStyle(
-                                    color: primaryColor,
-                                    fontFamily: RedHatDisplay.medium,
-                                    fontSize: 12,
-                                  ),
-                                ),
+                                child: Text('$uploadeDate',
+                                    style: const TextStyle(
+                                        color: primaryColor,
+                                        fontFamily: RedHatDisplay.medium,
+                                        fontSize: 12)),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
-                        width: 140.5.h,
-                      ),
+                      SizedBox(width: 140.5.h),
                       SizedBox(
                         height: 100.h,
                         width: 50.w,
                         child: FittedBox(
                           fit: BoxFit.scaleDown,
-                          child: Text(
-                            '$mark',
-                            style: const TextStyle(
-                                color: primaryColor,
-                                fontFamily: RedHatDisplay.medium,
-                                fontSize: 20),
-                          ),
+                          child: Text('$mark',
+                              style: const TextStyle(
+                                  color: primaryColor,
+                                  fontFamily: RedHatDisplay.medium,
+                                  fontSize: 20)),
                         ),
                       ),
                     ]),
@@ -371,6 +331,7 @@ class StudenOfTaskCard extends StatelessWidget {
   final index;
   final task_result_id;
   var uncontroller = Get.find<StudentTaskInfoController>();
+
   @override
   Widget build(BuildContext context) {
     uncontroller.task_id.value = taskId.toString();
@@ -379,9 +340,6 @@ class StudenOfTaskCard extends StatelessWidget {
       child: GestureDetector(
         onTap: () async {
           var data = Get.parameters;
-          print(taskUrl);
-
-          print(studentName + ' soultion for ' + data['taskName']);
           await openFile(
               url: taskUrl,
               fileName: studentName + ' soultion for ' + data['taskName']);
@@ -401,10 +359,7 @@ class StudenOfTaskCard extends StatelessWidget {
                 width: double.infinity,
                 child: Center(
                   child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 24.w,
-                      right: 24.w,
-                    ),
+                    padding: EdgeInsets.only(left: 24.w, right: 24.w),
                     child: SizedBox(
                       height: 130.h,
                       width: double.infinity,
@@ -417,12 +372,9 @@ class StudenOfTaskCard extends StatelessWidget {
                                 onTap: () {
                                   showDialog(
                                     context: context,
-                                    builder: (BuildContext) {
+                                    builder: (BuildContext ctx) {
                                       return AlertDialog(
                                           contentPadding: EdgeInsets.all(0),
-                                          /* actions: [
-                                      Text('hi'),
-                                    ],*/
                                           content: SizedBox(
                                             height: 350.h,
                                             child: Stack(children: [
@@ -435,8 +387,7 @@ class StudenOfTaskCard extends StatelessWidget {
                                                     image: DecorationImage(
                                                       fit: BoxFit.fill,
                                                       image: NetworkImage(
-                                                        photoUrl.toString(),
-                                                      ),
+                                                          photoUrl.toString()),
                                                     ),
                                                   ),
                                                 ),
@@ -469,9 +420,7 @@ class StudenOfTaskCard extends StatelessWidget {
                                       NetworkImage(photoUrl.toString()),
                                 ),
                               ),
-                              SizedBox(
-                                width: 30.w,
-                              ),
+                              SizedBox(width: 30.w),
                               SizedBox(
                                 width: 100.w,
                                 child: FittedBox(
@@ -484,39 +433,31 @@ class StudenOfTaskCard extends StatelessWidget {
                                       FittedBox(
                                         fit: BoxFit.scaleDown,
                                         child: SizedBox(
-                                          child: Text(
-                                            '${studentName}',
-                                            style: TextStyle(
-                                                color: darkGray,
-                                                fontFamily:
-                                                    RedHatDisplay.regular,
-                                                fontSize: 16),
-                                          ),
+                                          child: Text('${studentName}',
+                                              style: TextStyle(
+                                                  color: darkGray,
+                                                  fontFamily:
+                                                      RedHatDisplay.regular,
+                                                  fontSize: 16)),
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 10.h,
-                                      ),
+                                      SizedBox(height: 10.h),
                                       SizedBox(
                                         child: FittedBox(
                                           fit: BoxFit.scaleDown,
-                                          child: Text(
-                                            '$uploadDate',
-                                            style: TextStyle(
-                                                color: gray,
-                                                fontFamily:
-                                                    RedHatDisplay.medium,
-                                                fontSize: 12),
-                                          ),
+                                          child: Text('$uploadDate',
+                                              style: TextStyle(
+                                                  color: gray,
+                                                  fontFamily:
+                                                      RedHatDisplay.medium,
+                                                  fontSize: 12)),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 100.5.h,
-                              ),
+                              SizedBox(width: 100.5.h),
                               SizedBox(
                                 height: 100.h,
                                 width: 65.w,
@@ -530,9 +471,15 @@ class StudenOfTaskCard extends StatelessWidget {
                                         fontSize: 20,
                                         fontFamily: RedHatDisplay.medium,
                                       ),
-                                      confirm: RaisedButton(
+                                      // FIX: shape moved inside styleFrom
+                                      confirm: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(80.0)),
+                                          padding: EdgeInsets.all(0.0),
+                                        ),
                                         onPressed: () async {
-                                          print('is pressd');
                                           uncontroller.indexForStd.value =
                                               index;
                                           uncontroller.task_result_id.value =
@@ -542,10 +489,6 @@ class StudenOfTaskCard extends StatelessWidget {
                                           Get.back();
                                           EasyLoading.showSuccess('Done');
                                         },
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(80.0)),
-                                        padding: EdgeInsets.all(0.0),
                                         child: Ink(
                                           decoration: BoxDecoration(
                                               gradient: gradientColor,
@@ -556,22 +499,17 @@ class StudenOfTaskCard extends StatelessWidget {
                                                 maxWidth: 250.0,
                                                 minHeight: 50.0),
                                             alignment: Alignment.center,
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Add Mark",
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text("Add Mark",
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                         color: Colors.white,
-                                                        fontSize: 15),
-                                                  ),
-                                                  Icon(Icons.add, color: white),
-                                                ],
-                                              ),
+                                                        fontSize: 15)),
+                                                Icon(Icons.add, color: white),
+                                              ],
                                             ),
                                           ),
                                         ),
@@ -579,17 +517,13 @@ class StudenOfTaskCard extends StatelessWidget {
                                       onConfirm: () {},
                                       content: Column(
                                         children: [
-                                          Text(
-                                            '${studentName}',
-                                            style: TextStyle(
-                                              color: black,
-                                              fontSize: 15,
-                                              fontFamily: RedHatDisplay.bold,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            height: 15.h,
-                                          ),
+                                          Text('${studentName}',
+                                              style: TextStyle(
+                                                  color: black,
+                                                  fontSize: 15,
+                                                  fontFamily:
+                                                      RedHatDisplay.bold)),
+                                          SizedBox(height: 15.h),
                                           TextField(
                                             onChanged: (String value) {
                                               uncontroller.newMark.value =
@@ -602,16 +536,15 @@ class StudenOfTaskCard extends StatelessWidget {
                                                 child: Text('Enter mark'),
                                               ),
                                               labelStyle: TextStyle(
-                                                color: primaryColor,
-                                                fontSize: 15,
-                                              ),
+                                                  color: primaryColor,
+                                                  fontSize: 15),
                                               fillColor: backgroundColor,
                                               filled: true,
-                                              border: new OutlineInputBorder(
+                                              border: OutlineInputBorder(
                                                   borderRadius:
-                                                      new BorderRadius.circular(
+                                                      BorderRadius.circular(
                                                           12.0),
-                                                  borderSide: new BorderSide(
+                                                  borderSide: BorderSide(
                                                       width: 0.0,
                                                       color: backgroundColor)),
                                               contentPadding:
@@ -623,11 +556,8 @@ class StudenOfTaskCard extends StatelessWidget {
                                     );
                                   },
                                   child: Center(
-                                    child: Icon(
-                                      Icons.add,
-                                      color: primaryColor,
-                                      size: 40,
-                                    ),
+                                    child: Icon(Icons.add,
+                                        color: primaryColor, size: 40),
                                   ),
                                 ),
                               )
@@ -648,8 +578,6 @@ class StudenOfTaskCard extends StatelessWidget {
 Future openFile({required String url, String? fileName}) async {
   final file = await downloadFile(url, fileName!);
   if (file == null) return;
-  print('Path: ${file.path}');
-  // uncontroller.showNotification(fileName, file.path);
   OpenFile.open(file.path);
 }
 
@@ -664,14 +592,12 @@ Future<File?> downloadFile(String url, String name) async {
       options: Options(
         responseType: ResponseType.plain,
         followRedirects: false,
-        receiveTimeout: 0,
+        receiveTimeout: Duration(seconds: 30),
       ),
     );
-
     final raf = file.openSync(mode: FileMode.write);
     raf.writeFromSync(response.data);
     await raf.close();
-
     return file;
   } catch (e) {
     print(e);

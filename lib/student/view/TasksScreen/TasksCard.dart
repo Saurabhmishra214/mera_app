@@ -43,17 +43,12 @@ class TasksCard extends StatelessWidget {
   final deadline;
   final task_id;
   final url;
-  @override
-  void initState() {
-    print('Helooooooooooooooooooo');
-  }
 
   @override
   Widget build(BuildContext context) {
     final fileName = file != null ? basename(file!.path) : 'no file';
     _controller.task_id.value = task_id;
     _controller.task_name.value = name;
-    print("kkkkkkkkkkkkkkkkkkkkkkk");
     return Container(
         width: 200.w,
         child: GetBuilder(
@@ -65,10 +60,7 @@ class TasksCard extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: EdgeInsets.only(
-                      left: 15.w,
-                      top: 24.h,
-                      bottom: 2.h,
-                    ),
+                        left: 15.w, top: 24.h, bottom: 2.h),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -76,12 +68,10 @@ class TasksCard extends StatelessWidget {
                           width: 70.w,
                           child: FittedBox(
                             fit: BoxFit.scaleDown,
-                            child: Text(
-                              '${subjectName}',
-                              textAlign: TextAlign.start,
-                              style: redHatBoldStyle(
-                                  fontSize: 24, color: Colors.white),
-                            ),
+                            child: Text('${subjectName}',
+                                textAlign: TextAlign.start,
+                                style: redHatBoldStyle(
+                                    fontSize: 24, color: Colors.white)),
                           ),
                         ),
                         SizedBox(
@@ -91,9 +81,7 @@ class TasksCard extends StatelessWidget {
                             child: Text('$name',
                                 textAlign: TextAlign.start,
                                 style: redHatLightStyle(
-                                  fontSize: 12,
-                                  color: Colors.white,
-                                )),
+                                    fontSize: 12, color: Colors.white)),
                           ),
                         )
                       ],
@@ -103,42 +91,20 @@ class TasksCard extends StatelessWidget {
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                    padding: EdgeInsets.only(
-                      top: 15.h,
-                    ),
+                    padding: EdgeInsets.only(top: 15.h),
                     child: SizedBox(
                       height: 30.h,
                       child: DropdownButton(
                         underline: Text(''),
                         borderRadius: BorderRadius.circular(10),
-                        icon: const Icon(
-                          Icons.menu,
-                          size: 20,
-                          color: Colors.white,
-                        ),
+                        icon: const Icon(Icons.menu,
+                            size: 20, color: Colors.white),
                         items: [
                           DropdownMenuItem(
                             value: 'Donwload task',
                             onTap: () async {
-                              print("downloadddddddd");
-                              showSnackBar('Starting download...', context);
-                              /*openFile(
-                      url: '${gProgram.url}',
-                      fileName: '${gProgram.type}',
-                      );*/
-                              /*try{ final taskId = await FlutterDownloader.enqueue(
-                      url: '${widget.gProgram.url}',
-                      savedDir:
-                          '/data/user/0/com.example.school_management_system/files/',
-                      showNotification:
-                          true, // show download progress in status bar (for Android)
-                      openFileFromNotification:
-                          true, // click on notification to open downloaded file (for Android)
-                      );
-                     }catch(e){
-                      print(e);
-                     }*/
-
+                              showSnackBar(
+                                  'Starting download...', context);
                               final baseStorage =
                                   await getExternalStorageDirectory();
                               final id = await FlutterDownloader.enqueue(
@@ -148,26 +114,20 @@ class TasksCard extends StatelessWidget {
                               );
                             },
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('Download Task'),
-                                SizedBox(
-                                  width: 4.w,
-                                ),
-                                Icon(
-                                  Icons.file_download,
-                                  color: primaryColor,
-                                  size: 15,
-                                ),
+                                SizedBox(width: 4.w),
+                                Icon(Icons.file_download,
+                                    color: primaryColor, size: 15),
                               ],
                             ),
                           ),
                           DropdownMenuItem(
                             onTap: () async {
-                              await Get.dialog(Container(
-                                color: Colors.greenAccent,
-                              ));
-                              print('is Open');
+                              await Get.dialog(
+                                  Container(color: Colors.greenAccent));
                               await showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
@@ -180,7 +140,8 @@ class TasksCard extends StatelessWidget {
                                         width: 300.w,
                                         child: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                              MainAxisAlignment
+                                                  .spaceBetween,
                                           children: [
                                             GetBuilder(
                                               init: TasksController(),
@@ -196,10 +157,13 @@ class TasksCard extends StatelessWidget {
                                             ),
                                             MaterialButton(
                                               padding: EdgeInsets.all(0),
-                                              child: Icon(Icons.attach_file),
+                                              child:
+                                                  Icon(Icons.attach_file),
                                               onPressed: () async {
-                                                var file = await selectfile();
-                                                _controller.updateFile(file);
+                                                var file =
+                                                    await selectfile();
+                                                _controller
+                                                    .updateFile(file);
                                               },
                                             ),
                                           ],
@@ -207,30 +171,33 @@ class TasksCard extends StatelessWidget {
                                       ),
                                     ),
                                     actions: [
-                                      FlatButton(
-                                        child: Text(
-                                          "Dismiss",
-                                          style: TextStyle(
-                                            color: black,
-                                            fontSize: 16,
-                                            fontFamily: RedHatDisplay.medium,
-                                          ),
-                                        ),
+                                      TextButton(
+                                        child: Text("Dismiss",
+                                            style: TextStyle(
+                                                color: black,
+                                                fontSize: 16,
+                                                fontFamily:
+                                                    RedHatDisplay.medium)),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
                                       ),
-                                      FlatButton(
-                                        color: Colors.redAccent,
+                                      // FIX: color → style with foregroundColor/backgroundColor
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          backgroundColor:
+                                              Colors.redAccent,
+                                        ),
                                         child: Text("Upload",
                                             style: TextStyle(
-                                              color: white,
-                                              fontSize: 18,
-                                              fontFamily: RedHatDisplay.medium,
-                                            )),
+                                                color: white,
+                                                fontSize: 18,
+                                                fontFamily:
+                                                    RedHatDisplay.medium)),
                                         onPressed: () async {
                                           EasyLoading.show();
-                                          await _controller.uploadTaskResult();
+                                          await _controller
+                                              .uploadTaskResult();
                                           Navigator.of(context).pop();
                                           EasyLoading.showSuccess('Done');
                                         },
@@ -242,17 +209,13 @@ class TasksCard extends StatelessWidget {
                             },
                             value: 'Upload solution',
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
                               children: [
                                 Text('Upload solution'),
-                                SizedBox(
-                                  width: 4.w,
-                                ),
-                                Icon(
-                                  Icons.upload_file,
-                                  color: primaryColor,
-                                  size: 15,
-                                ),
+                                SizedBox(width: 4.w),
+                                Icon(Icons.upload_file,
+                                    color: primaryColor, size: 15),
                               ],
                             ),
                           ),
@@ -266,11 +229,10 @@ class TasksCard extends StatelessWidget {
                   alignment: Alignment.topRight,
                   child: Padding(
                     padding: EdgeInsets.only(
-                      left: 95.w,
-                      top: 124.h,
-                      right: 10.w,
-                      bottom: 16.h.h,
-                    ),
+                        left: 95.w,
+                        top: 124.h,
+                        right: 10.w,
+                        bottom: 16.h),
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: Padding(
@@ -282,40 +244,26 @@ class TasksCard extends StatelessWidget {
                               height: 13.h,
                               child: Row(
                                 children: [
-                                  Icon(
-                                    Icons.arrow_drop_up,
-                                    size: 15.h,
-                                    color: Colors.white,
-                                  ),
-                                  Text(
-                                    '$uploadDate',
-                                    style: redHatRegularStyle(
-                                      fontSize: 12.h,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                  Icon(Icons.arrow_drop_up,
+                                      size: 15.h, color: Colors.white),
+                                  Text('$uploadDate',
+                                      style: redHatRegularStyle(
+                                          fontSize: 12.h,
+                                          color: Colors.white)),
                                 ],
                               ),
                             ),
-                            SizedBox(
-                              height: 12.h,
-                            ),
+                            SizedBox(height: 12.h),
                             Container(
                               width: 70.w,
                               height: 13.h,
                               child: Row(children: [
-                                Icon(
-                                  Icons.arrow_drop_down,
-                                  size: 15.h,
-                                  color: Colors.white,
-                                ),
-                                Text(
-                                  '$deadline',
-                                  style: redHatRegularStyle(
-                                    fontSize: 12.h,
-                                    color: Colors.white,
-                                  ),
-                                ),
+                                Icon(Icons.arrow_drop_down,
+                                    size: 15.h, color: Colors.white),
+                                Text('$deadline',
+                                    style: redHatRegularStyle(
+                                        fontSize: 12.h,
+                                        color: Colors.white)),
                               ]),
                             )
                           ],

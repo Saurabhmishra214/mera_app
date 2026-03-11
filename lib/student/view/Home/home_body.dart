@@ -329,7 +329,7 @@ class programCard extends StatelessWidget {
         options: Options(
           responseType: ResponseType.bytes,
           followRedirects: false,
-          receiveTimeout: 0,
+          receiveTimeout: Duration(seconds: 30),
         ),
       );
 

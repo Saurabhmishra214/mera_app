@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "276187423017",
-    "project_id": "school-management-system-6b1c2",
-    "storage_bucket": "school-management-system-6b1c2.appspot.com"
+    "project_number": "278573889802",
+    "project_id": "school-18856",
+    "storage_bucket": "school-18856.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:276187423017:android:079da33d88525ee4f11738",
+        "mobilesdk_app_id": "1:278573889802:android:d9c21035312e6a177ae2f3",
         "android_client_info": {
           "package_name": "com.example.school_management_system"
         }
       },
       "oauth_client": [
         {
-          "client_id": "276187423017-bjhd0cfn62p2ok4drhgsrnkaaloqdf7i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.school_management_system",
-            "certificate_hash": "a5825e3d7786867957443beaeb5dc6018f0f6b1f"
-          }
-        },
-        {
-          "client_id": "276187423017-2ftmps92gf0vpmqm7v13uuer1361jjc0.apps.googleusercontent.com",
+          "client_id": "278573889802-f3jitmg5vqpfpo8fnrvcal3r30snkqmv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA5TmxgdFIk4jbLRUgkxFPBNgXVga5n4BY"
+          "current_key": "AIzaSyCxcPwcsUZShaDsmaO-3zHnvB7BDYZaP-4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "276187423017-2ftmps92gf0vpmqm7v13uuer1361jjc0.apps.googleusercontent.com",
+              "client_id": "278573889802-f3jitmg5vqpfpo8fnrvcal3r30snkqmv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

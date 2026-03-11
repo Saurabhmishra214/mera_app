@@ -43,9 +43,7 @@ class SProfileScreen extends StatelessWidget {
                     builder: ((controller) {
                       return Column(
                         children: <Widget>[
-                          SizedBox(
-                            height: 20.h,
-                          ),
+                          SizedBox(height: 20.h),
                           Stack(
                             children: [
                               Container(
@@ -75,53 +73,37 @@ class SProfileScreen extends StatelessWidget {
                                     gradient: gradientColor,
                                   ),
                                   child: IconButton(
-                                    onPressed: () {
-                                      //c.selectImage();
-                                    },
-                                    icon: const Icon(
-                                      Icons.camera_alt,
-                                      size: 17,
-                                      color: Colors.white,
-                                    ),
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.camera_alt,
+                                        size: 17, color: Colors.white),
                                   ),
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Text(_controller.studentInfo.value.fname.toString(),
+                          const SizedBox(height: 10),
+                          Text(
+                              _controller.studentInfo.value.fname.toString(),
                               style: redHatMediumStyle(
                                   fontSize: 20, color: Colors.black)),
-                          const SizedBox(
-                            height: 8,
-                          ),
+                          const SizedBox(height: 8),
                           Text('Student',
                               style: redHatMediumStyle(
                                   fontSize: 20, color: primaryColor)),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          const SizedBox(height: 30),
                           GlobalInfo(
                               fullname: "Full name",
                               name:
                                   '${_controller.studentInfo.value.fname} ${_controller.studentInfo.value.lname}',
                               icon: Icons.person),
-                          const Divider(
-                            indent: 65,
-                          ),
+                          const Divider(indent: 65),
                           Row(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Row(
                                   children: <Widget>[
-                                    Icon(
-                                      Icons.school,
-                                      color: gray,
-                                      size: 27,
-                                    ),
+                                    Icon(Icons.school, color: gray, size: 27),
                                     const SizedBox(width: 20),
                                     Column(
                                       crossAxisAlignment:
@@ -130,9 +112,7 @@ class SProfileScreen extends StatelessWidget {
                                         Text('Grade',
                                             style: redHatMediumStyle(
                                                 fontSize: 11, color: gray)),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
+                                        const SizedBox(height: 5),
                                         SizedBox(
                                           width: 100.w,
                                           child: Text(
@@ -141,9 +121,8 @@ class SProfileScreen extends StatelessWidget {
                                             maxLines: 10,
                                             overflow: TextOverflow.ellipsis,
                                             style: redHatMediumStyle(
-                                              fontSize: 16,
-                                              color: Colors.black,
-                                            ),
+                                                fontSize: 16,
+                                                color: Colors.black),
                                           ),
                                         ),
                                       ],
@@ -151,18 +130,12 @@ class SProfileScreen extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              SizedBox(
-                                width: 40.w,
-                              ),
+                              SizedBox(width: 40.w),
                               Padding(
                                 padding: const EdgeInsets.only(left: 10),
                                 child: Row(
                                   children: <Widget>[
-                                    Icon(
-                                      Icons.class_,
-                                      color: gray,
-                                      size: 27,
-                                    ),
+                                    Icon(Icons.class_, color: gray, size: 27),
                                     const SizedBox(width: 20),
                                     Column(
                                       crossAxisAlignment:
@@ -171,9 +144,7 @@ class SProfileScreen extends StatelessWidget {
                                         Text('Class',
                                             style: redHatMediumStyle(
                                                 fontSize: 11, color: gray)),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
+                                        const SizedBox(height: 5),
                                         SizedBox(
                                           width: 100.w,
                                           child: Text(
@@ -183,9 +154,8 @@ class SProfileScreen extends StatelessWidget {
                                             maxLines: 10,
                                             overflow: TextOverflow.ellipsis,
                                             style: redHatMediumStyle(
-                                              fontSize: 16,
-                                              color: Colors.black,
-                                            ),
+                                                fontSize: 16,
+                                                color: Colors.black),
                                           ),
                                         ),
                                       ],
@@ -195,30 +165,22 @@ class SProfileScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          const Divider(
-                            indent: 65,
-                          ),
+                          const Divider(indent: 65),
                           GlobalInfo(
                             fullname: "PhoneNumber",
-                            name:
-                                _controller.studentInfo.value.phone.toString(),
+                            name: _controller.studentInfo.value.phone
+                                .toString(),
                             icon: Icons.call,
                           ),
-                          const Divider(
-                            indent: 65,
-                          ),
+                          const Divider(indent: 65),
                           GlobalInfo(
                             fullname: "Parent",
                             name: _controller.studentInfo.value.paretnPhone
                                 .toString(),
                             icon: Icons.people,
                           ),
-                          const Divider(
-                            indent: 65,
-                          ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          const Divider(indent: 65),
+                          const SizedBox(height: 30),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -231,9 +193,7 @@ class SProfileScreen extends StatelessWidget {
                                       precentage:
                                           _controller.studentInfo.value.avrg,
                                     ),
-                                    SizedBox(
-                                      height: 35.h,
-                                    ),
+                                    SizedBox(height: 35.h),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
@@ -242,56 +202,46 @@ class SProfileScreen extends StatelessWidget {
                                         SizedBox(
                                           width: 100.w,
                                           child: const Center(
-                                            child: Text(
-                                              'HomeWork',
-                                              style: TextStyle(
-                                                  color: darkGray,
-                                                  fontFamily:
-                                                      RedHatDisplay.medium),
-                                            ),
+                                            child: Text('HomeWork',
+                                                style: TextStyle(
+                                                    color: darkGray,
+                                                    fontFamily:
+                                                        RedHatDisplay.medium)),
                                           ),
                                         ),
                                         SizedBox(
                                           width: 50.w,
                                           child: const Center(
-                                            child: Text(
-                                              'Exam1',
-                                              style: TextStyle(
-                                                  color: darkGray,
-                                                  fontFamily:
-                                                      RedHatDisplay.medium),
-                                            ),
+                                            child: Text('Exam1',
+                                                style: TextStyle(
+                                                    color: darkGray,
+                                                    fontFamily:
+                                                        RedHatDisplay.medium)),
                                           ),
                                         ),
                                         SizedBox(
                                           width: 50.w,
                                           child: const Center(
-                                            child: Text(
-                                              'Test',
-                                              style: TextStyle(
-                                                  color: darkGray,
-                                                  fontFamily:
-                                                      RedHatDisplay.medium),
-                                            ),
+                                            child: Text('Test',
+                                                style: TextStyle(
+                                                    color: darkGray,
+                                                    fontFamily:
+                                                        RedHatDisplay.medium)),
                                           ),
                                         ),
                                         SizedBox(
                                           width: 70.w,
                                           child: const Center(
-                                            child: Text(
-                                              'Exam2',
-                                              style: TextStyle(
-                                                  color: darkGray,
-                                                  fontFamily:
-                                                      RedHatDisplay.medium),
-                                            ),
+                                            child: Text('Exam2',
+                                                style: TextStyle(
+                                                    color: darkGray,
+                                                    fontFamily:
+                                                        RedHatDisplay.medium)),
                                           ),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
-                                      height: 23.h,
-                                    ),
+                                    SizedBox(height: 23.h),
                                     SizedBox(
                                         height: 200.h,
                                         width: 540.w,
@@ -341,9 +291,7 @@ class SProfileScreen extends StatelessWidget {
                                             );
                                           },
                                         )),
-                                    SizedBox(
-                                      height: 20.h,
-                                    )
+                                    SizedBox(height: 20.h)
                                   ],
                                 ),
                               ),
@@ -358,12 +306,18 @@ class SProfileScreen extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 height: 50.0,
                                 margin: EdgeInsets.all(10),
-                                child: RaisedButton(
+                                // FIX: shape moved inside styleFrom
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(80.0)),
+                                    padding: EdgeInsets.all(0.0),
+                                  ),
                                   onPressed: () {
                                     Get.defaultDialog(
                                       textConfirm: 'Add',
                                       onConfirm: () {
-                                        print('confirm');
                                         dropController.grade.value = _controller
                                             .studentInfo.value.grade
                                             .toString();
@@ -403,12 +357,9 @@ class SProfileScreen extends StatelessWidget {
                                               dropController.updateUI(newValue);
                                             },
                                             items: List.generate(
-                                                dropController.subjectNames
-                                                    .length, (index) {
-                                              print('this is drop item ' +
-                                                  dropController
-                                                      .subjectNames.value[index]
-                                                      .toString());
+                                                dropController
+                                                    .subjectNames.length,
+                                                (index) {
                                               return DropdownMenuItem<String>(
                                                   value: dropController
                                                       .subjectNames.value[index]
@@ -417,9 +368,7 @@ class SProfileScreen extends StatelessWidget {
                                                       '${dropController.subjectNames.value[index]}'));
                                             }),
                                           ),
-                                          SizedBox(
-                                            height: 10.h,
-                                          ),
+                                          SizedBox(height: 10.h),
                                           DropdownButtonFormField<String>(
                                             decoration: InputDecoration(
                                               enabledBorder: OutlineInputBorder(
@@ -438,8 +387,8 @@ class SProfileScreen extends StatelessWidget {
                                               ),
                                             ),
                                             dropdownColor: backgroundColor,
-                                            value: dropController
-                                                .selectedType.value,
+                                            value:
+                                                dropController.selectedType.value,
                                             onChanged: (newValue) {
                                               dropController
                                                   .updatetype(newValue);
@@ -452,8 +401,7 @@ class SProfileScreen extends StatelessWidget {
                                                       .markType.value[index]
                                                       .toString(),
                                                   child: Text(
-                                                    '${dropController.markType.value[index]}',
-                                                  ));
+                                                      '${dropController.markType.value[index]}'));
                                             }),
                                           ),
                                           SizedBox(height: 10),
@@ -463,7 +411,6 @@ class SProfileScreen extends StatelessWidget {
                                               Expanded(
                                                 child: TextField(
                                                   onChanged: (String value) {
-                                                    print(value);
                                                     dropController.mark.value =
                                                         value;
                                                   },
@@ -472,19 +419,19 @@ class SProfileScreen extends StatelessWidget {
                                                       padding:
                                                           const EdgeInsets.all(
                                                               8.0),
-                                                      child: Text('Enter mark'),
+                                                      child:
+                                                          Text('Enter mark'),
                                                     ),
                                                     labelStyle: TextStyle(
-                                                      color: primaryColor,
-                                                      fontSize: 15,
-                                                    ),
+                                                        color: primaryColor,
+                                                        fontSize: 15),
                                                     fillColor: backgroundColor,
                                                     filled: true,
-                                                    border: new OutlineInputBorder(
+                                                    border: OutlineInputBorder(
                                                         borderRadius:
-                                                            new BorderRadius
+                                                            BorderRadius
                                                                 .circular(12.0),
-                                                        borderSide: new BorderSide(
+                                                        borderSide: BorderSide(
                                                             width: 0.0,
                                                             color:
                                                                 backgroundColor)),
@@ -493,9 +440,7 @@ class SProfileScreen extends StatelessWidget {
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(
-                                                width: 15.w,
-                                              ),
+                                              SizedBox(width: 15.w),
                                               Expanded(
                                                 child: TextField(
                                                   onChanged: (String value) {
@@ -511,16 +456,15 @@ class SProfileScreen extends StatelessWidget {
                                                           'Enter full mark'),
                                                     ),
                                                     labelStyle: TextStyle(
-                                                      color: primaryColor,
-                                                      fontSize: 15,
-                                                    ),
+                                                        color: primaryColor,
+                                                        fontSize: 15),
                                                     fillColor: backgroundColor,
                                                     filled: true,
-                                                    border: new OutlineInputBorder(
+                                                    border: OutlineInputBorder(
                                                         borderRadius:
-                                                            new BorderRadius
+                                                            BorderRadius
                                                                 .circular(12.0),
-                                                        borderSide: new BorderSide(
+                                                        borderSide: BorderSide(
                                                             width: 0.0,
                                                             color:
                                                                 backgroundColor)),
@@ -535,10 +479,6 @@ class SProfileScreen extends StatelessWidget {
                                       ),
                                     );
                                   },
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(80.0)),
-                                  padding: EdgeInsets.all(0.0),
                                   child: Ink(
                                     decoration: BoxDecoration(
                                         gradient: gradientColor,
@@ -548,22 +488,17 @@ class SProfileScreen extends StatelessWidget {
                                       constraints: BoxConstraints(
                                           maxWidth: 250.0, minHeight: 50.0),
                                       alignment: Alignment.center,
-                                      child: Align(
-                                        alignment: Alignment.center,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "Add Mark",
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text("Add Mark",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 15),
-                                            ),
-                                            Icon(Icons.add, color: white),
-                                          ],
-                                        ),
+                                                  fontSize: 15)),
+                                          Icon(Icons.add, color: white),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -571,9 +506,7 @@ class SProfileScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 25.h,
-                          ),
+                          SizedBox(height: 25.h),
                         ],
                       );
                     }),
@@ -604,36 +537,25 @@ class SProfileShimmerLoading extends StatelessWidget {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 20.h,
-                  ),
+                  SizedBox(height: 20.h),
                   Skilton(
                     height: 135.h,
                     width: 135.w,
                     decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white),
-                    ),
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white)),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   Skilton(
-                    height: 50.h,
-                    width: 100.w,
-                    decoration: BoxDecoration(color: white),
-                  ),
-                  const SizedBox(
-                    height: 8,
-                  ),
+                      height: 50.h,
+                      width: 100.w,
+                      decoration: BoxDecoration(color: white)),
+                  const SizedBox(height: 8),
                   Skilton(
-                    height: 50.h,
-                    width: 100.w,
-                    decoration: BoxDecoration(color: white),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
+                      height: 50.h,
+                      width: 100.w,
+                      decoration: BoxDecoration(color: white)),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),
@@ -643,10 +565,9 @@ class SProfileShimmerLoading extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Skilton(
-                height: 100.h,
-                width: 300.w,
-                decoration: BoxDecoration(color: white),
-              ),
+                  height: 100.h,
+                  width: 300.w,
+                  decoration: BoxDecoration(color: white)),
             ),
           ),
           SizedBox(
@@ -655,37 +576,31 @@ class SProfileShimmerLoading extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Skilton(
-                    height: 100.h,
-                    width: 90.w,
-                    decoration: BoxDecoration(color: white),
-                  ),
-                ),
+                    child: Skilton(
+                        height: 100.h,
+                        width: 90.w,
+                        decoration: BoxDecoration(color: white))),
                 Expanded(
-                  child: Skilton(
-                    height: 100.h,
-                    width: 90.w,
-                    decoration: BoxDecoration(color: white),
-                  ),
-                ),
+                    child: Skilton(
+                        height: 100.h,
+                        width: 90.w,
+                        decoration: BoxDecoration(color: white))),
               ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Skilton(
-              height: 100.h,
-              width: 200.w,
-              decoration: BoxDecoration(color: white),
-            ),
+                height: 100.h,
+                width: 200.w,
+                decoration: BoxDecoration(color: white)),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Skilton(
-              height: 100.h,
-              width: 200.w,
-              decoration: BoxDecoration(color: white),
-            ),
+                height: 100.h,
+                width: 200.w,
+                decoration: BoxDecoration(color: white)),
           ),
         ],
       ),
@@ -707,6 +622,7 @@ class SubjectMarksCard extends StatelessWidget {
   final homework;
   final exam1;
   final exam2;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -717,56 +633,41 @@ class SubjectMarksCard extends StatelessWidget {
             width: 70.w,
             child: FittedBox(
               fit: BoxFit.scaleDown,
-              child: Text(
-                '$subjectname',
-                style: TextStyle(
-                  color: primaryColor,
-                  fontFamily: RedHatDisplay.medium,
-                  fontSize: 14,
-                ),
-              ),
+              child: Text('$subjectname',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontFamily: RedHatDisplay.medium,
+                      fontSize: 14)),
             ),
           ),
           SizedBox(width: 25.w),
           SizedBox(
-            child: Center(
-              child: Text(
-                '$homework',
-                style: TextStyle(
-                    color: darkGray, fontFamily: RedHatDisplay.medium),
-              ),
-            ),
-          ),
+              child: Center(
+                  child: Text('$homework',
+                      style: TextStyle(
+                          color: darkGray,
+                          fontFamily: RedHatDisplay.medium)))),
           SizedBox(width: 70.w),
           SizedBox(
-            child: Center(
-              child: Text(
-                '$exam1',
-                style: TextStyle(
-                    color: darkGray, fontFamily: RedHatDisplay.medium),
-              ),
-            ),
-          ),
+              child: Center(
+                  child: Text('$exam1',
+                      style: TextStyle(
+                          color: darkGray,
+                          fontFamily: RedHatDisplay.medium)))),
           SizedBox(width: 60.w),
           SizedBox(
-            child: Center(
-              child: Text(
-                '$test',
-                style: TextStyle(
-                    color: darkGray, fontFamily: RedHatDisplay.medium),
-              ),
-            ),
-          ),
+              child: Center(
+                  child: Text('$test',
+                      style: TextStyle(
+                          color: darkGray,
+                          fontFamily: RedHatDisplay.medium)))),
           SizedBox(width: 50.w),
           SizedBox(
-            child: Center(
-              child: Text(
-                '$exam2',
-                style: TextStyle(
-                    color: darkGray, fontFamily: RedHatDisplay.medium),
-              ),
-            ),
-          ),
+              child: Center(
+                  child: Text('$exam2',
+                      style: TextStyle(
+                          color: darkGray,
+                          fontFamily: RedHatDisplay.medium)))),
         ],
       ),
     );

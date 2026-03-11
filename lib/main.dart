@@ -10,12 +10,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:school_management_system/routes/app_pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:school_management_system/firebase_options.dart';
 
 import 'public/utils/constant.dart';
 
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
+    'high_importance_channel',
+    'High Importance Notifications',
     importance: Importance.high,
     playSound: true);
 
@@ -30,18 +31,13 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   await GetStorage.init();
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyBrqsWGI_6CrOkZnG1qTM7CiUcpWUtv2Rw',
-        appId: '1:276187423017:web:c977a55eb9088fbff11738',
-        messagingSenderId: '276187423017',
-        projectId: 'school-management-system-6b1c2',
-        storageBucket: 'school-management-system-6b1c2.appspot.com',
-      ),
-    );
-  } else {
-    await Firebase.initializeApp();
+
+  // FIX: DefaultFirebaseOptions.currentPlatform use karo - sab platforms pe kaam karega
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  if (!kIsWeb) {
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     await flutterLocalNotificationsPlugin
@@ -57,9 +53,9 @@ Future<void> main() async {
     );
     await FlutterDownloader.initialize(debug: true);
   }
+
   runApp(Phoenix(child: const MyApp()));
 }
-
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -73,9 +69,9 @@ class _MyAppState extends State<MyApp> {
     super.initState();
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification!;
+      RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
-      if (android != null) {
+      if (android != null && notification != null) {
         flutterLocalNotificationsPlugin.show(
             notification.hashCode,
             notification.title,
@@ -131,13 +127,18 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(428, 926),
-      builder: () => GetMaterialApp(
+      // FIX 1: builder signature updated (context, child) required in new ScreenUtilInit
+      builder: (context, child) => GetMaterialApp(
         initialRoute: AppPages.Splashscreen,
         getPages: AppPages.routes,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'RedHatDisplay-Medium',
-          backgroundColor: backgroundColor,
+          // FIX 2: backgroundColor removed, use colorScheme instead
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: backgroundColor,
+            background: backgroundColor,
+          ),
         ),
         builder: EasyLoading.init(),
       ),

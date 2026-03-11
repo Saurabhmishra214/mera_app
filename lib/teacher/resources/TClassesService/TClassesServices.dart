@@ -1,54 +1,42 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:school_management_system/public/config/user_information.dart';
+import 'package:school_management_system/services/api_service.dart';
 import 'package:school_management_system/teacher/Teacher_global_info/Classes_of_Teacher/TeacherClasses.dart';
 import 'package:school_management_system/teacher/model/Home/classRoomModel.dart';
 
 class TClassesServices {
   getTeacherClasses() async {
-    print('wtf');
     var classesList = [];
-    Set<String>? classesListId = {};
-    classesList.clear();
+    TeacherClasses.classesList.clear();
+
     try {
-      await FirebaseFirestore.instance
-          .collection('relation')
-          .where('teacher', isEqualTo: UserInformation.User_uId)
-          .get()
-          .then((value) {
-        for (var element in value.docs) {
-          var list = element.data()['classrooms'];
-          for (var item in list) {
-            classesListId.add(item.toString());
-          }
+      final response = await ApiService.dio.get('/classes');
+
+      if (response.data is List) {
+        for (var item in response.data) {
+          var classroom = ClassRoomModel(
+            classroomID: item['id'].toString(),
+            grade: item['grade']?.toString() ?? '',
+            section: item['section']?.toString() ?? '',
+            numberOfstudents: item['students_count'] ?? item['number_of_students'] ?? 0,
+          );
+          classesList.add(classroom);
+          TeacherClasses.classesList.add(classroom);
         }
-      });
-      print('classes is');
-      classesListId.forEach((element) {
-        print(element);
-      });
-      for (var item in classesListId) {
-        await FirebaseFirestore.instance
-            .collection('class-room')
-            .doc(item.toString())
-            .get()
-            .then((value) {
-          try {
-            var item = ClassRoomModel(
-              classroomID: value.data()!['uid'],
-              grade: value.data()!['acadimic_year'],
-              section: value.data()!['section'],
-              numberOfstudents: value.data()!['number_of_students'],
-            );
-            classesList.add(item);
-            TeacherClasses.classesList.add(item);
-          } catch (e) {
-            print(e);
-          }
-        });
+      } else if (response.data['data'] != null) {
+        for (var item in response.data['data']) {
+          var classroom = ClassRoomModel(
+            classroomID: item['id'].toString(),
+            grade: item['grade']?.toString() ?? '',
+            section: item['section']?.toString() ?? '',
+            numberOfstudents: item['students_count'] ?? item['number_of_students'] ?? 0,
+          );
+          classesList.add(classroom);
+          TeacherClasses.classesList.add(classroom);
+        }
       }
+
       return classesList;
     } catch (e) {
-      print(e);
+      print('TClassesServices error: $e');
       return classesList;
     }
   }

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,29 +14,28 @@ class TaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(
-          appBar: CostumAppBar(),
-          body: Center(
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: 40.0),
-                  child: RaisedButton(
-                    color: Colors.white,
-                      padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
-                   onPressed: () {  },
-                   child:Text ("ADD FILE + ")
-
-                  )
-                  )
-              ],
-                    ),
+      child: Scaffold(
+        appBar: CostumAppBar(),
+        body: Center(
+          child: Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: 40.0),
+                // FIX: RaisedButton removed in Flutter 3.x → use ElevatedButton
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    padding: EdgeInsets.fromLTRB(70, 10, 70, 10),
+                  ),
+                  onPressed: () {},
+                  child: Text("ADD FILE +"),
+                ),
+              )
+            ],
           ),
-
         ),
-              );
-
-
-
+      ),
+    );
   }
 }

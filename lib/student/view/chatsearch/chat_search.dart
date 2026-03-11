@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:school_management_system/student/controllers/SearchController.dart';
+// FIX: Renamed import to avoid conflict with Flutter's built-in SearchController
+import 'package:school_management_system/student/controllers/SearchController.dart' as SC;
 import 'package:school_management_system/student/models/user.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -102,7 +103,8 @@ class ChatSearch extends StatelessWidget {
 }
 
 class MySearchDelegate extends SearchDelegate {
-  SearchController controller = Get.put(SearchController());
+  // FIX: Use aliased import SC to avoid conflict with Flutter's SearchController
+  SC.SearchController controller = Get.put(SC.SearchController());
   final teachersNames = ["Yassin", "osama"];
 
   final recentTeachers = [];
@@ -121,7 +123,7 @@ class MySearchDelegate extends SearchDelegate {
 
   @override
   Widget? buildLeading(BuildContext context) {
-    IconButton(
+    return IconButton(
         onPressed: () => close(context, null), icon: Icon(Icons.arrow_back));
   }
 

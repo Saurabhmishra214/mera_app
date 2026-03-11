@@ -1,54 +1,76 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:school_management_system/public/utils/font_style.dart';
 import '../utils/constant.dart';
 
-class Roundedbutton extends StatelessWidget {
+// FIX: Removed rounded_loading_button package entirely
+// Replaced with a simple ElevatedButton with loading state
+
+class Roundedbutton extends StatefulWidget {
   const Roundedbutton({
     Key? key,
-    required RoundedLoadingButtonController buttonController,
-    required  Function press,
+    required Function press,
+  })  : _press = press,
+        super(key: key);
 
-  }) : _buttonController = buttonController,_press=press, super(key: key);
-
-  final RoundedLoadingButtonController _buttonController;
   final Function _press;
 
   @override
+  State<Roundedbutton> createState() => _RoundedbuttonState();
+}
+
+class _RoundedbuttonState extends State<Roundedbutton> {
+  bool _isLoading = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(  
-        height: 56,
-        width: 330,
-        child: RoundedLoadingButton(
-         
-         color:Colors.white,
-         valueColor:  primaryColor,
-          onPressed: ()=> _press.call(),
-          child: Wrap(
-            
-            children: [
-              Image(image: AssetImage('assets/icons/google.png')),
-                 
-              SizedBox(
-                width: 24.w,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Text(
-                  'Log In with Google',
-                  style:sfRegularStyle(fontSize: 24.sp,color: darkGray) ,
+    return SizedBox(
+      height: 56,
+      width: 330,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: darkGray,
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        onPressed: _isLoading
+            ? null
+            : () async {
+                setState(() => _isLoading = true);
+                await widget._press.call();
+                if (mounted) setState(() => _isLoading = false);
+              },
+        child: _isLoading
+            ? SizedBox(
+                height: 24,
+                width: 24,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: primaryColor,
                 ),
               )
-            ],
-          ),
-         
-          width: MediaQuery.of(context).size.width * 0.80,
-       
-          elevation: 2,
-          borderRadius: 10,
-          controller: _buttonController,
-        ),
-      );
+            : Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Image(
+                    image: AssetImage('assets/icons/google.png'),
+                    height: 24,
+                    width: 24,
+                  ),
+                  SizedBox(width: 24.w),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      'Log In with Google',
+                      style: sfRegularStyle(fontSize: 24.sp, color: darkGray),
+                    ),
+                  )
+                ],
+              ),
+      ),
+    );
   }
 }

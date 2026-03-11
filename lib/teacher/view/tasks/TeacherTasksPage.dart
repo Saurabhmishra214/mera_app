@@ -30,32 +30,22 @@ class TeacherTasksPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Task is here");
     var bottomController = Get.put(BottomSheetController());
     return SafeArea(
       child: Scaffold(
         backgroundColor: backgroundColor,
         drawer: Drawer(),
-        /* appBar: CostumAppBar(
-          title: 'Tasks',
-          style: redHatRegularStyle(fontSize: 24, color: Colors.white),
-        ),*/
         body: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
-                height: 24.h,
-              ),
+              SizedBox(height: 24.h),
               BottomSheetButton(),
               Container(
                 height: 718.h,
                 width: double.infinity,
                 child: Padding(
                   padding: EdgeInsets.only(
-                    top: 24.h,
-                    left: 15.w,
-                    right: 15.w,
-                  ),
+                      top: 24.h, left: 15.w, right: 15.w),
                   child: Padding(
                     padding: EdgeInsets.only(top: 20.h),
                     child: GetBuilder(
@@ -63,8 +53,8 @@ class TeacherTasksPage extends StatelessWidget {
                         builder: (controller) {
                           return FutureBuilder(
                             future: taskcontroller.getTasks(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot) {
+                            builder: (BuildContext context,
+                                AsyncSnapshot snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
                                 return Center(child: SimmerTaskLoading());
@@ -73,9 +63,10 @@ class TeacherTasksPage extends StatelessWidget {
                                   return Center(child: ErrorMessage());
                                 } else {
                                   return GridView.builder(
-                                      dragStartBehavior: DragStartBehavior.down,
-                                      itemCount:
-                                          taskcontroller.tasksList.value.length,
+                                      dragStartBehavior:
+                                          DragStartBehavior.down,
+                                      itemCount: taskcontroller
+                                          .tasksList.value.length,
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,
@@ -91,10 +82,12 @@ class TeacherTasksPage extends StatelessWidget {
                                         var uploadeDate =
                                             DateFormat("yyyy/MM/dd")
                                                 .format(date);
-                                        date = DateTime.parse(
-                                            item.deadLine.toDate().toString());
-                                        var deadline = DateFormat("yyyy/MM/dd")
-                                            .format(date);
+                                        date = DateTime.parse(item.deadLine
+                                            .toDate()
+                                            .toString());
+                                        var deadline =
+                                            DateFormat("yyyy/MM/dd")
+                                                .format(date);
                                         return Container(
                                           height: 178.h,
                                           width: 178.w,
@@ -104,7 +97,8 @@ class TeacherTasksPage extends StatelessWidget {
                                                 BorderRadius.circular(20),
                                           ),
                                           child: TeacherTasksCard(
-                                            subjectName: item.taskSubjectName,
+                                            subjectName:
+                                                item.taskSubjectName,
                                             taskName: item.taskName,
                                             uploadDate: uploadeDate,
                                             deadline: deadline,
@@ -135,8 +129,8 @@ class SimmerTaskLoadingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Skilton(
-      decoration:
-          BoxDecoration(color: white, borderRadius: BorderRadius.circular(20)),
+      decoration: BoxDecoration(
+          color: white, borderRadius: BorderRadius.circular(20)),
     );
   }
 }
@@ -163,9 +157,7 @@ class SimmerTaskLoading extends StatelessWidget {
 }
 
 class BottomSheetButton extends StatelessWidget {
-  const BottomSheetButton({
-    Key? key,
-  }) : super(key: key);
+  const BottomSheetButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -183,95 +175,65 @@ class BottomSheetButton extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 24.w,
-                            top: 24.h,
-                          ),
+                          padding:
+                              EdgeInsets.only(left: 24.w, top: 24.h),
                           child: SizedBox(
                             width: 73.w,
-                            child: const Text(
-                              'Grade',
-                              style: TextStyle(
-                                color: darkGray,
-                                fontFamily: RedHatDisplay.medium,
-                                fontSize: 20,
-                              ),
-                            ),
+                            child: const Text('Grade',
+                                style: TextStyle(
+                                    color: darkGray,
+                                    fontFamily: RedHatDisplay.medium,
+                                    fontSize: 20)),
                           ),
                         ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
+                        SizedBox(height: 24.h),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 30.w,
-                          ),
+                          padding: EdgeInsets.only(left: 30.w),
                           child: const ChosingGradeBar(),
                         ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
+                        SizedBox(height: 24.h),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 24.w,
-                            top: 24.h,
-                          ),
+                          padding:
+                              EdgeInsets.only(left: 24.w, top: 24.h),
                           child: SizedBox(
                             width: 73.w,
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
-                              child: const Text(
-                                'Section',
-                                style: TextStyle(
-                                  color: darkGray,
-                                  fontFamily: RedHatDisplay.medium,
-                                  fontSize: 20,
-                                ),
-                              ),
+                              child: const Text('Section',
+                                  style: TextStyle(
+                                      color: darkGray,
+                                      fontFamily: RedHatDisplay.medium,
+                                      fontSize: 20)),
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
+                        SizedBox(height: 24.h),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 30.w,
-                          ),
+                          padding: EdgeInsets.only(left: 30.w),
                           child: const ChosingClassSection(),
                         ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
+                        SizedBox(height: 24.h),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 24.w,
-                            top: 24.h,
-                          ),
+                          padding:
+                              EdgeInsets.only(left: 24.w, top: 24.h),
                           child: SizedBox(
                             width: 73.w,
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
-                              child: const Text(
-                                'DeadLine',
-                                style: TextStyle(
-                                  color: darkGray,
-                                  fontFamily: RedHatDisplay.medium,
-                                  fontSize: 20,
-                                ),
-                              ),
+                              child: const Text('DeadLine',
+                                  style: TextStyle(
+                                      color: darkGray,
+                                      fontFamily: RedHatDisplay.medium,
+                                      fontSize: 20)),
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
+                        SizedBox(height: 24.h),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 30.w,
-                          ),
+                          padding: EdgeInsets.only(left: 30.w),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
                             children: [
                               GetBuilder(
                                   init: BottomSheetController(),
@@ -287,16 +249,17 @@ class BottomSheetButton extends StatelessWidget {
                                     builder: (context, child) {
                                       return Theme(
                                         data: Theme.of(context).copyWith(
-                                          colorScheme: ColorScheme.light(
-                                            primary:
-                                                primaryColor, // <-- SEE HERE
-                                            onPrimary: white, // <-- SEE HERE
-                                            onSurface: black, // <-- SEE HERE
+                                          colorScheme:
+                                              ColorScheme.light(
+                                            primary: primaryColor,
+                                            onPrimary: white,
+                                            onSurface: black,
                                           ),
-                                          textButtonTheme: TextButtonThemeData(
+                                          textButtonTheme:
+                                              TextButtonThemeData(
+                                            // FIX: primary → foregroundColor
                                             style: TextButton.styleFrom(
-                                              primary:
-                                                  primaryColor, // button text color
+                                              foregroundColor: primaryColor,
                                             ),
                                           ),
                                         ),
@@ -307,53 +270,38 @@ class BottomSheetButton extends StatelessWidget {
                                     firstDate: DateTime(2000),
                                     lastDate: DateTime(2030),
                                   ).then((pickedDate) {
-                                    // Check if no date is selected
-                                    if (pickedDate == null) {
-                                      return;
-                                    } else {
-                                      bottomController
-                                          .updateDeadline(pickedDate);
-                                    }
+                                    if (pickedDate == null) return;
+                                    bottomController
+                                        .updateDeadline(pickedDate);
                                   });
                                 },
-                                child: Icon(
-                                  Icons.calendar_month,
-                                  size: 20,
-                                  color: gray,
-                                ),
+                                child: Icon(Icons.calendar_month,
+                                    size: 20, color: gray),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
+                        SizedBox(height: 24.h),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 20.w,
-                            top: 24.h,
-                          ),
+                          padding:
+                              EdgeInsets.only(left: 20.w, top: 24.h),
                           child: SizedBox(
                             width: 73.w,
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
-                              child: const Text(
-                                'File',
-                                style: TextStyle(
-                                  color: darkGray,
-                                  fontFamily: RedHatDisplay.medium,
-                                  fontSize: 20,
-                                ),
-                              ),
+                              child: const Text('File',
+                                  style: TextStyle(
+                                      color: darkGray,
+                                      fontFamily: RedHatDisplay.medium,
+                                      fontSize: 20)),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 30.w,
-                          ),
+                          padding: EdgeInsets.only(left: 30.w),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
                             children: [
                               GetBuilder(
                                   init: BottomSheetController(),
@@ -364,43 +312,33 @@ class BottomSheetButton extends StatelessWidget {
                               MaterialButton(
                                 onPressed: () async {
                                   File file = await selectfile();
-
                                   bottomController.updateFile(file);
                                 },
-                                child: Icon(
-                                  Icons.attach_file,
-                                  size: 20,
-                                  color: gray,
-                                ),
+                                child: Icon(Icons.attach_file,
+                                    size: 20, color: gray),
                               )
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 24.h,
-                        ),
+                        SizedBox(height: 24.h),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 24.w,
-                            top: 24.h,
-                          ),
+                          padding:
+                              EdgeInsets.only(left: 24.w, top: 24.h),
                           child: SizedBox(
                             width: 73.w,
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
-                              child: const Text(
-                                'Name',
-                                style: TextStyle(
-                                  color: darkGray,
-                                  fontFamily: RedHatDisplay.medium,
-                                  fontSize: 20,
-                                ),
-                              ),
+                              child: const Text('Name',
+                                  style: TextStyle(
+                                      color: darkGray,
+                                      fontFamily: RedHatDisplay.medium,
+                                      fontSize: 20)),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 30.w, right: 30.w),
+                          padding: EdgeInsets.only(
+                              left: 30.w, right: 30.w),
                           child: TextField(
                             onChanged: (String value) {
                               bottomController.taskName.value = value;
@@ -411,36 +349,31 @@ class BottomSheetButton extends StatelessWidget {
                                 child: Text('Enter task name'),
                               ),
                               labelStyle: TextStyle(
-                                color: primaryColor,
-                                fontSize: 15,
-                              ),
+                                  color: primaryColor, fontSize: 15),
                               fillColor: backgroundColor,
                               filled: true,
-                              border: new OutlineInputBorder(
-                                  borderRadius: new BorderRadius.circular(12.0),
-                                  borderSide: new BorderSide(
-                                      width: 0.0, color: backgroundColor)),
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(12.0),
+                                  borderSide: BorderSide(
+                                      width: 0.0,
+                                      color: backgroundColor)),
                               contentPadding: EdgeInsets.all(8.0),
                             ),
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(
-                            left: 24.w,
-                            top: 24.h,
-                          ),
+                          padding:
+                              EdgeInsets.only(left: 24.w, top: 24.h),
                           child: SizedBox(
                             width: 73.w,
                             child: FittedBox(
                               fit: BoxFit.scaleDown,
-                              child: const Text(
-                                'Subject',
-                                style: TextStyle(
-                                  color: darkGray,
-                                  fontFamily: RedHatDisplay.medium,
-                                  fontSize: 20,
-                                ),
-                              ),
+                              child: const Text('Subject',
+                                  style: TextStyle(
+                                      color: darkGray,
+                                      fontFamily: RedHatDisplay.medium,
+                                      fontSize: 20)),
                             ),
                           ),
                         ),
@@ -449,19 +382,20 @@ class BottomSheetButton extends StatelessWidget {
                           child: DropdownButtonFormField<String>(
                             decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: primaryColor, width: 2),
+                                borderSide: BorderSide(
+                                    color: primaryColor, width: 2),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               border: OutlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: primaryColor, width: 2),
+                                borderSide: BorderSide(
+                                    color: primaryColor, width: 2),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                             ),
                             dropdownColor: backgroundColor,
                             onChanged: (String? newValue) {
-                              bottomController.updateSubjectDropmenu(newValue!);
+                              bottomController
+                                  .updateSubjectDropmenu(newValue!);
                             },
                             items: List.generate(
                                 bottomController.teachersubject.length,
@@ -471,8 +405,7 @@ class BottomSheetButton extends StatelessWidget {
                                       .teachersubject.value[index]
                                       .toString(),
                                   child: Text(
-                                    '${bottomController.teachersubject.value[index]}',
-                                  ));
+                                      '${bottomController.teachersubject.value[index]}'));
                             }),
                           ),
                         ),
@@ -508,53 +441,33 @@ class BottomSheetButton extends StatelessWidget {
 }
 
 class AddFileButton extends StatelessWidget {
-  const AddFileButton({
-    Key? key,
-    this.label,
-    this.onTap,
-  }) : super(key: key);
-
+  const AddFileButton({Key? key, this.label, this.onTap}) : super(key: key);
   final label;
   final onTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-        left: 54.w,
-        right: 54.w,
-      ),
+      padding: EdgeInsets.only(left: 54.w, right: 54.w),
       child: GestureDetector(
         onTap: onTap,
         child: Container(
           height: 60.h,
           width: 428.w,
           decoration: BoxDecoration(
-            color: white,
-            borderRadius: BorderRadius.circular(20),
-          ),
+              color: white, borderRadius: BorderRadius.circular(20)),
           child: Center(
-            child: GestureDetector(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Add ${label}',
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Add ${label}',
                     style: TextStyle(
                         color: primaryColor,
                         fontFamily: RedHatDisplay.medium,
-                        fontSize: 16),
-                  ),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  Icon(
-                    Icons.add,
-                    size: 16,
-                    color: primaryColor,
-                  ),
-                ],
-              ),
+                        fontSize: 16)),
+                SizedBox(width: 5.w),
+                Icon(Icons.add, size: 16, color: primaryColor),
+              ],
             ),
           ),
         ),
@@ -564,27 +477,24 @@ class AddFileButton extends StatelessWidget {
 }
 
 class AddButton extends StatelessWidget {
-  const AddButton({
-    Key? key,
-    this.Bcontext,
-    this.onpress,
-  }) : super(key: key);
-
-  @override
+  const AddButton({Key? key, this.Bcontext, this.onpress}) : super(key: key);
   final Bcontext;
   final onpress;
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(36, 0, 36, 36),
       child: ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: primaryColor),
+          // FIX: primary → backgroundColor
+          style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
           onPressed: onpress,
           child: Center(
-            child: Text(
-              'ADD',
-              style: TextStyle(
-                  color: white, fontSize: 20, fontFamily: RedHatDisplay.medium),
-            ),
+            child: Text('ADD',
+                style: TextStyle(
+                    color: white,
+                    fontSize: 20,
+                    fontFamily: RedHatDisplay.medium)),
           )),
     );
   }
