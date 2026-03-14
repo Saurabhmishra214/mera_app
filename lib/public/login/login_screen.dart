@@ -119,16 +119,22 @@ class _LoginScreenState extends State<LoginScreen> {
         UserInformation.fullname = userData['name'] ?? '';
 
         // Role check karo aur navigate karo
-        if (teacher && (role == 'teacher' || role == 'admin')) {
-          Get.offAllNamed('/teahome');
-        } else if (student && role == 'student') {
-          Get.offAllNamed('/sthome');
-        } else if (role == 'teacher' || role == 'admin') {
-          Get.offAllNamed('/teahome');
-        } else if (role == 'student') {
-          Get.offAllNamed('/sthome');
-        } else {
-          showSnackBar('Unknown role: $role', context);
+        // Role check karo aur navigate karo
+        switch (role) {
+          case 'admin':
+            Get.offAllNamed('/teahome');
+            break;
+          case 'teacher':
+            Get.offAllNamed('/teahome');
+            break;
+          case 'student':
+            Get.offAllNamed('/sthome');
+            break;
+          case 'parent':
+            Get.offAllNamed('/parhome');
+            break;
+          default:
+            showSnackBar('Unknown role: $role', context);
         }
       } else {
         showSnackBar(response.data['message'] ?? 'Login failed', context);
@@ -182,8 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     SizedBox(height: 72.h),
                     const Loginlabel(),
                     SizedBox(height: size.height / 10),
-                    Text("I am",
-                        style: sfBoldStyle(fontSize: 24, color: gray)),
+                    Text("I am", style: sfBoldStyle(fontSize: 24, color: gray)),
                     SizedBox(height: 32.h),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 28.w),
@@ -334,8 +339,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       label: Text('Sign in with Google'),
                                     ),
                               SizedBox(height: 20.h),
-                              const DividerParent(
-                                  text: "Update your account"),
+                              const DividerParent(text: "Update your account"),
                               SizedBox(height: 20.h),
                               SendEmail(
                                 press: () {

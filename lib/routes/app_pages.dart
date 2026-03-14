@@ -54,6 +54,7 @@ class AppPages {
   static const tsubjects = '/tsubjectlist';
   static const studentsOfTask = '/studentsOfTask';
   static const tadjuncts = '/tadjuncts';
+
   static final routes = [
     GetPage(
       name: INITIAL,
@@ -115,7 +116,7 @@ class AppPages {
       binding: ChatSearchBinding(),
     ),
     GetPage(
-      name: Teacherhome,
+      name: Teacherhome,      // '/teahome' — Teacher + Admin dono yahan aayenge
       page: () => HomeBody(),
     ),
     GetPage(

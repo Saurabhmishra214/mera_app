@@ -19,16 +19,27 @@ class SplashController extends GetxController {
     String? role = _storage.read('role');
 
     if (uid != null && token != null) {
+      // UserInformation update karo
       UserInformation.User_uId = uid;
       UserInformation.apiToken = token;
       UserInformation.role = role;
 
-      if (role == 'teacher') {
-        Get.offAllNamed('/teahome');
-      } else if (role == 'student') {
-        Get.offAllNamed('/sthome');
-      } else {
-        Get.offAllNamed('/login');
+      // Role ke hisab se navigate karo
+      switch (role) {
+        case 'admin':
+          Get.offAllNamed('/teahome');
+          break;
+        case 'teacher':
+          Get.offAllNamed('/teahome');
+          break;
+        case 'student':
+          Get.offAllNamed('/sthome');
+          break;
+        case 'parent':
+          Get.offAllNamed('/parhome');
+          break;
+        default:
+          Get.offAllNamed('/login');
       }
     } else {
       Get.offAllNamed('/login');

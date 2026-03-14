@@ -42,7 +42,7 @@ class HomeBody extends StatelessWidget {
           init: TeacherHomeController(),
           builder: (controller) {
             return controller
-                .bottomNavgationBarPages.value[controller.currentIndex.value];
+    .bottomNavgationBarPages[controller.currentIndex.value];
           },
         ),
         bottomNavigationBar: GetBuilder(
