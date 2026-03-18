@@ -3,7 +3,6 @@ import 'package:school_management_system/public/login/verify_code_parent.dart';
 import 'package:school_management_system/public/splash/splash_scrren.dart';
 import 'package:school_management_system/student/binding/announcements.dart';
 import 'package:school_management_system/student/binding/chatSearch.dart';
-import 'package:school_management_system/student/binding/lesson.dart';
 import 'package:school_management_system/student/binding/refrences.dart';
 import 'package:school_management_system/student/binding/tasks.dart';
 import 'package:school_management_system/student/view/Announcements/AnnouncementsPage.dart';
@@ -12,12 +11,10 @@ import 'package:school_management_system/student/view/Home/home.dart';
 import 'package:school_management_system/student/view/Profile/stprofile.dart';
 import 'package:school_management_system/student/view/Subjects/SubjectsScreen.dart';
 import 'package:school_management_system/student/view/TasksScreen/TasksPage.dart';
-import 'package:school_management_system/teacher/binding/lessonBinding.dart';
 import 'package:school_management_system/teacher/view/Home/HomeBody.dart';
 import 'package:school_management_system/teacher/view/TSubject/Subjects/SubjectScreen.dart';
 import 'package:school_management_system/teacher/view/TSubject/TSubjectsInfo.dart';
 import 'package:school_management_system/teacher/view/TSubject/TlessonScreen.dart';
-
 import '../parent/view/home.dart';
 import '../public/login/login_screen.dart';
 import '../public/login/verify_code_teacher.dart';
@@ -35,25 +32,25 @@ import '../teacher/view/tasks/studentsOfTask.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = '/login';
-  static const Studentprofile = '/stprofile';
-  static const Splashscreen = '/splash';
-  static const Studenthome = '/sthome';
-  static const Teacherhome = '/teahome';
-  static const Verifycode = '/verify';
+  static const INITIAL         = '/login';
+  static const Studentprofile  = '/stprofile';
+  static const Splashscreen    = '/splash';
+  static const Studenthome     = '/sthome';
+  static const Teacherhome     = '/teahome';
+  static const Verifycode      = '/verify';
   static const VerifyCodeparent = '/verifyparent';
-  static const Parenthome = '/parhome';
-  static const tasks = '/tasks';
-  static const adjuncts = '/adjuncts';
-  static const announcements = '/announcements';
-  static const subjects = '/subjects';
-  static const ChatStudent = '/chatstudent';
-  static const Chatsearch = '/chatsearch';
-  static const taskTeacher = '/taskteacher';
-  static const tsubjectinfo = '/tsubjectinfo';
-  static const tsubjects = '/tsubjectlist';
-  static const studentsOfTask = '/studentsOfTask';
-  static const tadjuncts = '/tadjuncts';
+  static const Parenthome      = '/parhome';
+  static const tasks           = '/tasks';
+  static const adjuncts        = '/adjuncts';
+  static const announcements   = '/announcements';
+  static const subjects        = '/subjects';
+  static const ChatStudent     = '/chatstudent';
+  static const Chatsearch      = '/chatsearch';
+  static const taskTeacher     = '/taskteacher';
+  static const tsubjectinfo    = '/tsubjectinfo';
+  static const tsubjects       = '/tsubjectlist';
+  static const studentsOfTask  = '/studentsOfTask';
+  static const tadjuncts       = '/tadjuncts';
 
   static final routes = [
     GetPage(
@@ -93,18 +90,17 @@ class AppPages {
     ),
     GetPage(
       name: adjuncts,
-      page: () => const Refrences(),
+      page: () => Refrences(),           // ← const hata diya
       binding: RefrencesBinding(),
     ),
     GetPage(
       name: announcements,
-      page: () => const AnnouncementsPage(),
+      page: () => AnnouncementsPage(),
       binding: AnnouncementsBinding(),
     ),
     GetPage(
       name: subjects,
-      page: () => const SubjectsScreen(),
-      binding: LessonsBinding(),
+      page: () => SubjectsScreen(),      // ← const aur LessonsBinding hata diya
     ),
     GetPage(
       name: ChatStudent,
@@ -116,7 +112,7 @@ class AppPages {
       binding: ChatSearchBinding(),
     ),
     GetPage(
-      name: Teacherhome,      // '/teahome' — Teacher + Admin dono yahan aayenge
+      name: Teacherhome,
       page: () => HomeBody(),
     ),
     GetPage(

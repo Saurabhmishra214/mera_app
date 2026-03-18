@@ -1,26 +1,42 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/state_manager.dart';
-import 'package:school_management_system/student/resources/AnnouncementsServeces/AnnouncementsServeces.dart';
-import 'package:school_management_system/student/view/Announcements/AnnouncementsPage.dart';
-
-import '../models/Announcements/AnnouncementsModel.dart';
+import 'package:get/get.dart';
+import 'package:school_management_system/services/api_service.dart';
 
 class AnnouncementsController extends GetxController {
-  var announcementsServeces = AnnouncementsServeces();
+
+  var isLoading         = true.obs;
   var announcementsList = [].obs;
 
-  RxString userIdclassroom = ''.obs;
+  Future<void> getAnnouncements() async {
+    try {
+      isLoading.value = true;
+      final data = await ApiService.get('/notices');
 
-  Future<String> getUserClassRoom() async {
-    userIdclassroom.value = await announcementsServeces.getUserClassroom();
-    update();
-    return userIdclassroom.value;
+      // ✅ Fix — 'data' key use karo, 'notices' nahi
+      // Response: {'success': true, 'data': {'data': [...pagination...]}}
+      if (data['data'] != null) {
+        final pageData = data['data'];
+        if (pageData['data'] != null) {
+          // Paginated response
+          announcementsList.value = List.from(pageData['data']);
+        } else {
+          announcementsList.value = List.from(pageData);
+        }
+      } else {
+        announcementsList.value = [];
+      }
+
+    } catch (e) {
+      print('Announcements error: $e');
+      announcementsList.value = [];
+    } finally {
+      isLoading.value = false;
+      update();
+    }
   }
 
   @override
   void onInit() {
-    // TODO: implement onInit
-    getUserClassRoom();
     super.onInit();
+    getAnnouncements();
   }
 }

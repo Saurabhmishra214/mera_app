@@ -62,4 +62,29 @@ class ApiService {
   static bool isLoggedIn() {
     return _storage.read('token') != null;
   }
+
+  // Yeh method add karo existing ApiService mein
+
+// Simple GET
+static Future<Map<String, dynamic>> get(String endpoint) async {
+  try {
+    final response = await dio.get(endpoint);
+    return response.data;
+  } catch (e) {
+    print('GET Error $endpoint: $e');
+    return {'error': e.toString()};
+  }
+}
+
+// Simple POST
+static Future<Map<String, dynamic>> post(
+    String endpoint, Map<String, dynamic> data) async {
+  try {
+    final response = await dio.post(endpoint, data: data);
+    return response.data;
+  } catch (e) {
+    print('POST Error $endpoint: $e');
+    return {'error': e.toString()};
+  }
+}
 }

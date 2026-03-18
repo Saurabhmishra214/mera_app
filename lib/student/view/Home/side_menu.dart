@@ -1,299 +1,252 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:school_management_system/public/config/user_information.dart';
 import 'package:school_management_system/public/utils/constant.dart';
-
-import '../../../public/utils/font_style.dart';
-import '../../../routes/app_pages.dart';
-import '../../controllers/home_controller.dart';
-import '../../resources/Parent/parentApi.dart';
-import '../../resources/complaint/complaintApi.dart';
+import 'package:school_management_system/public/utils/font_style.dart';
+import 'package:school_management_system/routes/app_pages.dart';
+import 'package:school_management_system/services/api_service.dart';
+import 'package:school_management_system/student/controllers/home_controller.dart';
+import 'package:school_management_system/student/view/Profile/stprofile.dart';
 
 var homeController = Get.put<HomeController>(HomeController());
 
 class SideMenue extends StatelessWidget {
-  get image => null;
-
-  SideMenue({
-    this.onPress,
-  });
+  SideMenue({this.onPress});
   final onPress;
-
-  final contentController = TextEditingController();
-  final titleController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    addcomplaintapi(String content, String title, String id) async {
-      bool ok = await ComplaintApi.addComplaintapi(contentController.text,
-          titleController.text, UserInformation.User_uId);
-
-      if (ok) {
-        homeController.showNotification2(
-            'Report', 'The report has been uploaded');
-      }
-      titleController.clear();
-      contentController.clear();
-    }
-
     return Drawer(
+      backgroundColor: Colors.white,
       child: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 60,
-            ),
-            InkWell(
-              onTap: () {
-                if (!UserInformation.uParent) {
-                  Get.toNamed(AppPages.Studentprofile);
-                }
-              },
-              child: Container(
-                height: 135,
-                width: 135,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.grey),
-                  image: DecorationImage(
-                      image: NetworkImage(UserInformation.urlAvatr),
-                      fit: BoxFit.cover),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextButton(
-                onPressed: onPress,
-                child: Text(UserInformation.first_name,
-                    style:
-                        redHatMediumStyle(fontSize: 20, color: Colors.grey))),
-            const SizedBox(
-              height: 30,
-            ),
-            Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
-            FutureBuilder(
-              future: homeController.getchilds(),
-              builder: ((context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: Text('Loading...'));
-                }
 
-                return homeController.mychilds.isEmpty
-                    ? SizedBox(
-                        height: 25,
-                        child: Center(
-                          child: Text(
-                            'NO childs',
-                          ),
-                        ),
-                      )
-                    : ListView.separated(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        separatorBuilder: (context, index) => SizedBox(
-                          height: 5,
-                        ),
-                        itemCount: homeController.mychilds.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          final user = homeController.mychilds[index];
-                          return Container(
-                            height: 75,
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                radius: 25,
-                                backgroundImage: NetworkImage(user.urlAvatar),
-                              ),
-                              title: TextButton(
-                                  onPressed: () {
-                                    UserInformation.fees =
-                                        UserInformation.classid = user.classid;
-                                    UserInformation.first_name = user.firstName;
-                                    UserInformation.last_name = user.lastName;
-                                    UserInformation.phone = user.phone;
-                                    UserInformation.parentphone =
-                                        user.parentPhone;
-                                    UserInformation.classroom =
-                                        user.studentClass;
-                                    UserInformation.clasname =
-                                        user.studentClass;
-                                    UserInformation.urlAvatr = user.urlAvatar;
-                                    /* UserInformation.grade_average =
-                                        user.average;
-                                   UserInformation.grade = user.studentGrade;*/
-                                    UserInformation.User_uId = user.id;
-                                    UserInformation.email = user.email;
-                                    UserInformation.uParent = false;
-                                    Phoenix.rebirth(context);
-                                    Get.toNamed(AppPages.Splashscreen);
-                                  },
-                                  child: Text(user.firstName)),
-                            ),
-                          );
-                        },
-                      );
-              }),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
+            // ── Header ────────────────────────────
             Container(
-              height: 50,
-              width: 320,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Icon(
-                      Icons.line_weight_rounded,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  UserInformation.uParent
-                      ? SizedBox(height: 1)
-                      : TextButton(
-                          onPressed: () {
-                            Get.defaultDialog(
-                                backgroundColor: backgroundColor,
-                                title: 'Add Report',
-                                titleStyle: redHatMediumStyle(
-                                    color: darkGray, fontSize: 28),
-                                contentPadding: EdgeInsets.all(20),
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    TextField(
-                                      onChanged: (value) {
-                                        print(value);
-                                      },
-                                      controller: titleController,
-                                      keyboardType: TextInputType.text,
-                                      maxLines: 1,
-                                      decoration: InputDecoration(
-                                        labelText: 'Title',
-                                        hintMaxLines: 1,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    TextField(
-                                      onChanged: (value) {},
-                                      controller: contentController,
-                                      keyboardType: TextInputType.text,
-                                      maxLines: 1,
-                                      decoration: InputDecoration(
-                                        labelText: 'Content',
-                                        hintMaxLines: 1,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 20.0,
-                                    ),
-                                    Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              // c.update();
-                                              addcomplaintapi(
-                                                  contentController.text,
-                                                  titleController.text,
-                                                  UserInformation.User_uId);
-                                              Get.back();
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              width: 110,
-                                              color: primaryColor,
-                                              child: Center(
-                                                child: Text(
-                                                  'submit',
-                                                  style: redHatBoldStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              Get.back();
-                                            },
-                                            child: Container(
-                                              height: 40,
-                                              width: 110,
-                                              color: Colors.white,
-                                              child: Center(
-                                                child: Text(
-                                                  'cancel',
-                                                  style: redHatBoldStyle(
-                                                      color: Colors.grey),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                radius: 10.0);
-                          },
-                          child: Text(
-                            "Report (write a complaint)",
-                            style:
-                                sfMediumStyle(fontSize: 16, color: Colors.grey),
-                          ),
-                        ),
-                ],
+              width: double.infinity,
+              padding: const EdgeInsets.only(
+                  top: 60, bottom: 24, left: 20, right: 20),
+              decoration: BoxDecoration(
+                gradient: gradientColor,
               ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Container(
-              height: 50,
-              width: 320,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              child: Column(
                 children: [
-                  const Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Icon(
-                      Icons.logout,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Get.toNamed(AppPages.INITIAL);
+                  // Profile Photo
+                  GestureDetector(
+                    onTap: () {
+                      Get.back();
+                      Get.to(() => StudentProfile());
                     },
-                    child: Text(
-                      "log out",
-                      style: sfMediumStyle(fontSize: 16, color: Colors.grey),
+                    child: Container(
+                      height: 90,
+                      width: 90,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2),
+                        image: DecorationImage(
+                          image: UserInformation.urlAvatr.isNotEmpty
+                              ? NetworkImage(UserInformation.urlAvatr)
+                                  as ImageProvider
+                              : const AssetImage('assets/images/photo.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Name
+                  Text(
+                    UserInformation.fullname.isNotEmpty
+                        ? UserInformation.fullname
+                        : GetStorage().read('user')?['name'] ?? 'Student',
+                    style: redHatMediumStyle(
+                        fontSize: 18, color: Colors.white),
+                  ),
+                  const SizedBox(height: 4),
+
+                  // Class
+                  Text(
+                    UserInformation.clasname.isNotEmpty
+                        ? UserInformation.clasname
+                        : '',
+                    style: sfRegularStyle(
+                        fontSize: 13, color: Colors.white70),
                   ),
                 ],
               ),
             ),
+
+            const SizedBox(height: 10),
+
+            // ── Menu Items ────────────────────────
+            _menuItem(
+              icon: Icons.home,
+              title: 'Home',
+              onTap: () {
+                Get.back();
+                homeController.changePages(0);
+              },
+            ),
+
+            _menuItem(
+              icon: Icons.person,
+              title: 'My Profile',
+              onTap: () {
+                Get.back();
+                Get.to(() => StudentProfile());
+              },
+            ),
+
+            _menuItem(
+              icon: Icons.task,
+              title: 'Tasks',
+              onTap: () {
+                Get.back();
+                homeController.changePages(1);
+              },
+            ),
+
+            _menuItem(
+              icon: Icons.attachment,
+              title: 'Adjuncts',
+              onTap: () {
+                Get.back();
+                homeController.changePages(2);
+              },
+            ),
+
+            _menuItem(
+              icon: Icons.message,
+              title: 'Chats',
+              onTap: () {
+                Get.back();
+                homeController.changePages(3);
+              },
+            ),
+
+            const Divider(color: Colors.grey, thickness: 0.5),
+
+            // ── Report ────────────────────────────
+            _menuItem(
+              icon: Icons.flag,
+              title: 'Report (Write a Complaint)',
+              onTap: () {
+                Get.back();
+                _showReportDialog(context);
+              },
+            ),
+
+            const Divider(color: Colors.grey, thickness: 0.5),
+
+            // ── Logout ────────────────────────────
+            _menuItem(
+              icon: Icons.logout,
+              title: 'Log Out',
+              color: Colors.red,
+              onTap: () async {
+                // Token clear karo
+                ApiService.clearToken();
+                UserInformation.clear();
+                Get.offAllNamed(AppPages.INITIAL);
+              },
+            ),
+
+            const SizedBox(height: 20),
           ],
         ),
       ),
+    );
+  }
+
+  // ── Menu Item Widget ──────────────────────────
+  Widget _menuItem({
+    required IconData icon,
+    required String title,
+    required Function() onTap,
+    Color color = Colors.grey,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: color, size: 24),
+      title: Text(
+        title,
+        style: sfMediumStyle(fontSize: 15, color: color),
+      ),
+      onTap: onTap,
+      horizontalTitleGap: 8,
+    );
+  }
+
+  // ── Report Dialog ─────────────────────────────
+  void _showReportDialog(BuildContext context) {
+    final titleController   = TextEditingController();
+    final contentController = TextEditingController();
+
+    Get.defaultDialog(
+      backgroundColor: Colors.white,
+      title: 'Add Report',
+      titleStyle: redHatMediumStyle(color: Colors.black87, fontSize: 20),
+      contentPadding: const EdgeInsets.all(20),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: titleController,
+            decoration: InputDecoration(
+              labelText: 'Title',
+              prefixIcon: const Icon(Icons.title),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8)),
+            ),
+          ),
+          const SizedBox(height: 12),
+          TextField(
+            controller: contentController,
+            maxLines: 3,
+            decoration: InputDecoration(
+              labelText: 'Content',
+              prefixIcon: const Icon(Icons.description),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8)),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // Cancel
+              OutlinedButton(
+                onPressed: () => Get.back(),
+                child: const Text('Cancel'),
+              ),
+              // Submit
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor),
+                onPressed: () async {
+                  if (titleController.text.isEmpty ||
+                      contentController.text.isEmpty) {
+                    Get.snackbar('Error', 'Please fill all fields',
+                        backgroundColor: Colors.red,
+                        colorText: Colors.white);
+                    return;
+                  }
+                  // TODO: API call karo complaint ke liye
+                  Get.back();
+                  Get.snackbar('Success', 'Report submitted!',
+                      backgroundColor: Colors.green,
+                      colorText: Colors.white);
+                },
+                child: const Text('Submit',
+                    style: TextStyle(color: Colors.white)),
+              ),
+            ],
+          ),
+        ],
+      ),
+      radius: 12,
     );
   }
 }

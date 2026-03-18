@@ -4,24 +4,18 @@ import 'package:get/get.dart';
 import 'package:school_management_system/public/utils/constant.dart';
 import 'package:school_management_system/public/utils/font_style.dart';
 import 'package:school_management_system/student/controllers/home_controller.dart';
-import 'package:school_management_system/student/controllers/subject/subjectController.dart';
 import 'package:school_management_system/student/view/Announcements/AnnouncementsPage.dart';
 import 'package:school_management_system/student/view/Home/home_appbar.dart';
 import 'package:school_management_system/student/view/Home/home_body.dart';
 import 'package:school_management_system/student/view/Home/side_menu.dart';
 
 final HomeController c = Get.put<HomeController>(HomeController());
-var _SubjectController = Get.put<SubjectController>(SubjectController());
 
 class HomeStudent extends StatelessWidget {
   HomeStudent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    _SubjectController.subjectList.value.forEach((elemn) {
-      print(elemn.name);
-      print(elemn.teacherName);
-    });
     return SafeArea(
       child: Scaffold(
         drawer: SideMenue(),
@@ -30,11 +24,14 @@ class HomeStudent extends StatelessWidget {
           child: GetBuilder<HomeController>(
             init: HomeController(),
             builder: (c) => CostumHomeAppBar(
-                title: c.appBarTitles.value[c.currentIndex.value],
-                style: redHatRegularStyle(fontSize: 20, color: Colors.white),
-                ontap: () {
-                  Get.to(() => AnnouncementsPage());
-                }),
+              title: c.currentIndex.value == 0
+                  ? 'Hello, ${c.studentName.value} 👋'
+                  : c.appBarTitles.value[c.currentIndex.value],
+              style: redHatRegularStyle(fontSize: 20, color: Colors.white),
+              ontap: () {
+                Get.to(() => AnnouncementsPage());
+              },
+            ),
           ),
         ),
         body: GetBuilder<HomeController>(
@@ -54,7 +51,7 @@ class HomeStudent extends StatelessWidget {
             elevation: 8,
             items: [
               CustomNavigationBarItem(
-                icon: const Icon(Icons.home),
+                icon: const Icon(Icons.home_rounded),
                 title: Text(
                   "Home",
                   style: c.currentIndex.value == 0
@@ -63,34 +60,37 @@ class HomeStudent extends StatelessWidget {
                 ),
               ),
               CustomNavigationBarItem(
-                icon: const Icon(
-                  Icons.task,
-                ),
+                icon: const Icon(Icons.menu_book_rounded),
                 title: Text(
-                  "Tasks",
+                  "Subjects",
                   style: c.currentIndex.value == 1
                       ? sfRegularStyle(fontSize: 10, color: primaryColor)
                       : sfRegularStyle(fontSize: 10, color: gray),
                 ),
               ),
               CustomNavigationBarItem(
-                icon: const Icon(
-                  Icons.attachment,
-                ),
+                icon: const Icon(Icons.bar_chart_rounded),
                 title: Text(
-                  "Adjuncts",
+                  "Results",
                   style: c.currentIndex.value == 2
                       ? sfRegularStyle(fontSize: 10, color: primaryColor)
                       : sfRegularStyle(fontSize: 10, color: gray),
                 ),
               ),
               CustomNavigationBarItem(
-                icon: const Icon(
-                  Icons.message,
-                ),
+                icon: const Icon(Icons.account_balance_wallet_rounded),
                 title: Text(
-                  "Chats",
+                  "Fees",
                   style: c.currentIndex.value == 3
+                      ? sfRegularStyle(fontSize: 10, color: primaryColor)
+                      : sfRegularStyle(fontSize: 10, color: gray),
+                ),
+              ),
+              CustomNavigationBarItem(
+                icon: const Icon(Icons.more_horiz_rounded),
+                title: Text(
+                  "More",
+                  style: c.currentIndex.value == 4
                       ? sfRegularStyle(fontSize: 10, color: primaryColor)
                       : sfRegularStyle(fontSize: 10, color: gray),
                 ),

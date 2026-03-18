@@ -11,29 +11,51 @@ class TeacherHomeController extends GetxController {
   final _storage = GetStorage();
 
   // ── Teacher info ──────────────────────────────
-  var teacherName = ''.obs;
+  var teacherName  = ''.obs;
   var teacherEmail = ''.obs;
   var teacherPhoto = ''.obs;
 
-  // ── Dashboard stats ───────────────────────────
-  var totalStudents = 0.obs;
-  var todayPresent = 0.obs;
+  // ── Stats ─────────────────────────────────────
+  var totalStudents  = 0.obs;
   var activeHomework = 0.obs;
+  var totalExams     = 0.obs;
+  var totalNotices   = 0.obs;
 
-  // ── Lists ─────────────────────────────────────
-  var classesList = <ClassRoomModel>[].obs;
+  // ── Full lists (API se aaye) ──────────────────
+  var classesList   = <ClassRoomModel>[].obs;
   var timetableList = [].obs;
-  var noticesList = [].obs;
+  var subjectsList  = [].obs;
+  var homeworkList  = [].obs;
+  var examsList     = [].obs;
+  var noticesList   = [].obs;
 
-  // ── Loading states ────────────────────────────
+  // ── "Show more" flags — 2 dikhao by default ──
+  // true = saare dikhao, false = sirf 2
+  var showAllClasses   = false.obs;
+  var showAllSubjects  = false.obs;
+  var showAllHomework  = false.obs;
+  var showAllExams     = false.obs;
+  var showAllNotices   = false.obs;
+  var showAllTimetable = false.obs;
+
+  // Preview count — kitne items pehle dikhane hain
+  static const int previewCount = 2;
+
+  // ── Loading ───────────────────────────────────
+  var isLoading        = true.obs;
   var isLoadingProfile = false.obs;
-  var isLoadingClasses = false.obs;
-  var isLoadingTimetable = false.obs;
-  var isLoadingNotices = false.obs;
 
   // ── Bottom nav ────────────────────────────────
   var currentIndex = 0.obs;
   var appBarTitles = ['Home', 'Tasks', 'Adjuncts', 'Chat'].obs;
+
+  // Ye getters "show more" logic handle karte hain
+  List get visibleClasses   => showAllClasses.value   ? classesList   : classesList.take(previewCount).toList();
+  List get visibleSubjects  => showAllSubjects.value  ? subjectsList  : subjectsList.take(previewCount).toList();
+  List get visibleHomework  => showAllHomework.value  ? homeworkList  : homeworkList.take(previewCount).toList();
+  List get visibleExams     => showAllExams.value     ? examsList     : examsList.take(previewCount).toList();
+  List get visibleNotices   => showAllNotices.value   ? noticesList   : noticesList.take(previewCount).toList();
+  List get visibleTimetable => showAllTimetable.value ? timetableList : timetableList.take(previewCount).toList();
 
   List get bottomNavgationBarPages => [
         const HomeTeacher(),
@@ -45,19 +67,15 @@ class TeacherHomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _loadFromStorage(); // Pehle storage se load karo (fast)
+    _loadFromStorage();
     fetchTeacherProfile();
-    fetchClasses();
-    fetchTimetable();
-    fetchNotices();
-    fetchDashboardStats();
+    fetchDashboard(); // ← ek hi API call sab kuch
   }
 
-  // Storage se naam turant load karo
   void _loadFromStorage() {
     final userData = _storage.read('user');
     if (userData != null) {
-      teacherName.value = userData['name'] ?? '';
+      teacherName.value  = userData['name']  ?? '';
       teacherEmail.value = userData['email'] ?? '';
       teacherPhoto.value = userData['photo'] ?? '';
     }
@@ -67,99 +85,70 @@ class TeacherHomeController extends GetxController {
   Future<void> fetchTeacherProfile() async {
     isLoadingProfile.value = true;
     try {
-      final response = await ApiService.dio.get('/me');
-      if (response.data['success'] == true) {
-        final user = response.data['user'];
-        teacherName.value = user['name'] ?? '';
+      final res = await ApiService.dio.get('/me');
+      if (res.data is Map && res.data['success'] == true) {
+        final user = res.data['user'] ?? res.data['data'] ?? {};
+        teacherName.value  = user['name']  ?? '';
         teacherEmail.value = user['email'] ?? '';
         teacherPhoto.value = user['photo'] ?? '';
+        // Storage mein bhi save karo
+        _storage.write('user', user);
       }
     } catch (e) {
-      print('fetchTeacherProfile error: $e');
+      print('🔴 [/me] $e');
     } finally {
       isLoadingProfile.value = false;
     }
     update();
   }
 
-  // ── /api/classes ──────────────────────────────
-  Future<void> fetchClasses() async {
-    isLoadingClasses.value = true;
+  // ── /api/teacher/dashboard — ek call, sab data ─
+  Future<void> fetchDashboard() async {
+    isLoading.value = true;
     try {
-      final response = await ApiService.dio.get('/classes');
-      final List data = response.data is List
-          ? response.data
-          : (response.data['data'] ?? []);
+      final res = await ApiService.dio.get('/teacher/dashboard');
+      print('🔵 [/teacher/dashboard] ${res.statusCode}');
 
-      classesList.value = data.map((item) => ClassRoomModel(
-            classroomID: item['id'].toString(),
-            grade: item['name']?.toString() ?? '',
-            section: item['section']?.toString() ?? '',
-            numberOfstudents: item['students_count'] ?? 0,
-          )).toList();
+      if (res.data is Map && res.data['success'] == true) {
+        final d = res.data['data'] as Map;
 
-      // Total students count
-      int total = 0;
-      for (var c in classesList) {
-        total += (c.numberOfstudents as int? ?? 0);
-      }
-      totalStudents.value = total;
-    } catch (e) {
-      print('fetchClasses error: $e');
-    } finally {
-      isLoadingClasses.value = false;
-    }
-    update();
-  }
+        // ── Stats ─────────────────────────────
+        final stats = d['stats'] ?? {};
+        totalStudents.value  = stats['total_students']  ?? 0;
+        activeHomework.value = stats['active_homework'] ?? 0;
+        totalExams.value     = stats['upcoming_exams']  ?? 0;
+        totalNotices.value   = stats['total_notices']   ?? 0;
 
-  // ── /api/timetable ────────────────────────────
-  Future<void> fetchTimetable() async {
-    isLoadingTimetable.value = true;
-    try {
-      final response = await ApiService.dio.get('/timetable');
-      final List data = response.data is List
-          ? response.data
-          : (response.data['data'] ?? []);
-      timetableList.value = data;
-    } catch (e) {
-      print('fetchTimetable error: $e');
-    } finally {
-      isLoadingTimetable.value = false;
-    }
-    update();
-  }
+        // ── Classes ───────────────────────────
+        final rawClasses = d['classes'] as List? ?? [];
+        classesList.value = rawClasses.map((item) => ClassRoomModel(
+              classroomID:      (item['id'] ?? '').toString(),
+              grade:            (item['name'] ?? '').toString(),
+              section:          (item['section'] ?? '').toString(),
+              numberOfstudents: item['students_count'] ?? 0,
+            )).toList();
 
-  // ── /api/notices ──────────────────────────────
-  Future<void> fetchNotices() async {
-    isLoadingNotices.value = true;
-    try {
-      final response = await ApiService.dio.get('/notices');
-      final List data = response.data is List
-          ? response.data
-          : (response.data['data'] ?? []);
-      noticesList.value = data;
-    } catch (e) {
-      print('fetchNotices error: $e');
-    } finally {
-      isLoadingNotices.value = false;
-    }
-    update();
-  }
+        // ── Timetable ─────────────────────────
+        timetableList.value = d['timetable'] as List? ?? [];
 
-  // ── /api/dashboard/stats ──────────────────────
-  Future<void> fetchDashboardStats() async {
-    try {
-      final response = await ApiService.dio.get('/dashboard/stats');
-      if (response.data['success'] == true) {
-        final data = response.data['data'] ?? response.data;
-        todayPresent.value = data['today_present'] ?? 0;
-        activeHomework.value = data['active_homework'] ?? 0;
-        if (data['total_students'] != null) {
-          totalStudents.value = data['total_students'];
-        }
+        // ── Subjects ──────────────────────────
+        subjectsList.value = d['subjects'] as List? ?? [];
+
+        // ── Homework ──────────────────────────
+        homeworkList.value = d['homework'] as List? ?? [];
+
+        // ── Exams ─────────────────────────────
+        examsList.value = d['exams'] as List? ?? [];
+
+        // ── Notices ───────────────────────────
+        noticesList.value = d['notices'] as List? ?? [];
+
+        print('✅ classes:${classesList.length} hw:${homeworkList.length} exams:${examsList.length} notices:${noticesList.length}');
       }
     } catch (e) {
-      print('fetchDashboardStats error: $e');
+      print('🔴 [/teacher/dashboard] $e');
+    } finally {
+      isLoading.value = false;
     }
     update();
   }

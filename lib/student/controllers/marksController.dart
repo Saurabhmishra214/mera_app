@@ -1,41 +1,81 @@
-import 'package:get/state_manager.dart';
-import 'package:school_management_system/student/models/Subjects/SubjectsModel.dart';
-import 'package:school_management_system/student/resources/subject/marksServices.dart';
+import 'package:get/get.dart';
+import 'package:school_management_system/services/api_service.dart';
+
+class MarksModel {
+  final String title;
+  final dynamic mark;
+  final dynamic fmark;
+
+  MarksModel({
+    this.title = '',
+    this.mark  = '-',
+    this.fmark = '-',
+  });
+}
 
 class MarksController extends GetxController {
-  var marksServices = MarkServices();
-  var marksList = [
-    /*MarksModel(title: 'Exam1', mark: 15, fmark: 30),
-    MarksModel(title: 'Quizz1', mark: 14, fmark: 20),
-    MarksModel(title: 'HomeWorks', mark: 20, fmark: 20),
-    MarksModel(title: 'Exam2', mark: 25, fmark: 30),*/
-  ].obs;
 
-  var exam1 = MarksModel().obs;
-  var tests = MarksModel().obs;
+  var isLoading  = true.obs;
+  var resultList = [].obs;
+  var subjectId  = ''.obs;
+
+  // Individual marks
+  var exam1     = MarksModel().obs;
+  var tests     = MarksModel().obs;
   var homeworks = MarksModel().obs;
-  var exam2 = MarksModel().obs;
-  var subjectId = ''.obs;
-  getExam1(String subjectId) async {
-    exam1.value = await marksServices.getExam1Result(subjectId);
+  var exam2     = MarksModel().obs;
+
+  // ─── API se results lo ────────────────────────
+  Future<void> getResults(String sId) async {
+    try {
+      isLoading.value = true;
+      final data = await ApiService.get('/results?subject_id=$sId');
+
+      List list = [];
+      if (data['data'] != null && data['data']['data'] != null) {
+        list = data['data']['data'];
+      } else if (data['data'] != null) {
+        list = List.from(data['data']);
+      }
+
+      resultList.value = list;
+
+      // Results parse karo
+      for (var item in list) {
+        final examType = item['exam']?['type'] ?? '';
+        final obtained = item['marks_obtained'] ?? '-';
+        final total    = item['exam']?['full_marks'] ?? '-';
+        final name     = item['exam']?['name'] ?? examType;
+
+        switch (examType) {
+          case 'mid_term':
+            exam1.value = MarksModel(
+              title: name, mark: obtained, fmark: total);
+            break;
+          case 'final':
+            exam2.value = MarksModel(
+              title: name, mark: obtained, fmark: total);
+            break;
+          case 'test':
+            tests.value = MarksModel(
+              title: name, mark: obtained, fmark: total);
+            break;
+          default:
+            break;
+        }
+      }
+
+    } catch (e) {
+      print('Results error: $e');
+    } finally {
+      isLoading.value = false;
+      update();
+    }
   }
 
-  getTests(String subjectId) async {
-    tests.value = await marksServices.getTestsResult(subjectId);
-  }
-
-  getHomeworks(String subjectId) async {
-    homeworks.value = await marksServices.getHomeworksResult(subjectId);
-  }
-
-  getExam2(String subjectId) async {
-    exam2.value = await marksServices.getExam2Result(subjectId);
-  }
-
-  @override
-  void onReady() {
-    // TODO: implement onReady
-    print(subjectId.value);
-    super.onReady();
-  }
+  // Yeh methods purani compatibility ke liye
+  Future<void> getExam1(String sId) async => await getResults(sId);
+  Future<void> getTests(String sId)  async => await getResults(sId);
+  Future<void> getHomeworks(String sId) async {}
+  Future<void> getExam2(String sId)  async {}
 }

@@ -139,3 +139,115 @@ lib/
 
 📊 Summary — Kaun Kaun Si Screens Hain?
 UserScreens👨‍💼 AdminHome, User management👨‍👩‍👦 ParentHome, Child ka status dekho🎓 StudentHome, Subjects, Marks, Tasks, Notices, Chat, Quiz, Videos👨‍🏫 TeacherHome, Subjects, Marks dalo, Tasks do, Notice bhejo, Chat, Quiz banao
+
+
+
+
+Screens (Flutter)
+📚
+SubjectsScreen
+Full-width cards, arrow icon, homework badge
+Done
+💰
+FeesScreen
+Summary card, filter chips, monthly list
+Done
+🏠
+AttendanceScreen
+Progress bar, summary, filter chips
+Done
+🕐
+TimetableScreen
+Day tabs, period cards, room info
+Done
+⋯
+MoreScreen
+Profile card, menu items, logout dialog, contact
+Done
+🧾
+FeeReceiptScreen
+Receipt card, copy button, payment status
+Done
+GetX Controllers (Flutter)
+🏠
+HomeController
+Dashboard data, section bug fix
+Done
+📅
+AttendanceController
+List + summary + filter
+Done
+⏰
+TimetableController
+Day select + lowercase key fix
+Done
+💳
+FeeController
+Fee list + receipt detail
+Done
+📖
+SubjectController (GetX)
+Subject list load
+Done
+⚙️
+MoreController
+Student info + logout
+Done
+Laravel APIs
+🖥
+StudentDashboardController
+3-step subject fallback fix
+Done
+📚
+SubjectController
+Timetable → Exams → Homework fallback
+Done
+📊
+ResultController
+examResults route bug fix
+Done
+💰
+FeeController
+myFees + myFeeDetail APIs
+Done
+📅
+AttendanceController
+myAttendance — list + summary
+Done
+⏰
+TimetableController
+myTimetable — weekly grouped
+Done
+Bugs Fixed
+🐛
+section NOT NULL
+null → '' empty string
+Fixed
+🐛
+level column missing
+SubjectSeeder se remove
+Fixed
+🐛
+parent_phone missing
+80 students mein add kiya
+Fixed
+🐛
+Subjects nahi show ho rahe
+Timetable→Exams→Homework fallback
+Fixed
+🐛
+Timetable empty (Class 6)
+Saari 16 classes seed kiya
+Fixed
+🐛
+Timetable lowercase keys
+Flutter mein capitalize fix
+Fixed
+🐛
+Obx improper use (Fees)
+Summary card fix
+Fixed
+🐛
+examResults route conflict
+{id} → ?ids= query param
+Fixed
