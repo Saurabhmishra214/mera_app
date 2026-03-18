@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_storage/get_storage.dart';
 
 class ApiService {
-  static const String baseUrl = 'http://192.168.31.162:8000/api';
+  static const String baseUrl = 'https://merawebsite-production.up.railway.app/api';
 
   static final Dio _dio = Dio(
     BaseOptions(
